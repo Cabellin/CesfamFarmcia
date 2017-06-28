@@ -142,7 +142,7 @@ public class UsuarioBean implements Serializable {
         Usuario u = usuarioFacade.find(nomUsu);
         //contrasena = DigestUtils.md5Hex(contrasena);
 
-        if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
+        if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 1) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", u.getFuncionarioRut().getNombres() + " " + u.getFuncionarioRut().getApellidoPat());
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
@@ -217,6 +217,10 @@ public class UsuarioBean implements Serializable {
             item.setOutcome("partida");
             menu.addElement(item);
 
+            item = new DefaultMenuItem("NUEVO MEDICAMENTO");
+            item.setOutcome("RegistrarMedicamentos");
+            menu.addElement(item);
+            
             item = new DefaultMenuItem("MANTENEDOR");
             item.setOutcome("Mantenedor");
             menu.addElement(item);
@@ -234,7 +238,7 @@ public class UsuarioBean implements Serializable {
             menu.addElement(item);
             
         }
-
         return menu;
+
     }
 }

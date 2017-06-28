@@ -8,12 +8,13 @@
     <h:head>
         <title>Partidas</title>
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
-
+        <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body onload="#{partidaBean.partida()}" style="background-image: url('../resources/images/fondo-01.jpg');">
+    <h:body onload="#{partidaBean.partida()}" style="background-image: url('../resources/images/farmacia1.jpg');">
 
 
-        <ui:include src="includes/menu.xhtml"/> <!-- Para incluir el menu -->
+        <ui:include src="includes/menu.xhtml"/>
+        <br/><br/>
         <center>
 
 
@@ -63,6 +64,7 @@
                         </p:outputPanel>
                     </p:fieldset>
 
+                    <br/><br/>
                     <p:selectOneMenu id="proveedores" value="#{partidaBean.partida.proveedorId}" style="width:150px" required="true" requiredMessage="Debe escoger un proveedor">
                         <f:selectItem itemLabel="Seleccione Proveedor" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{partidaBean.proveedores}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p}" />
@@ -75,7 +77,7 @@
                     <br/><br/><br/>
                     <p:commandButton value="Ingresar Partida" update="mensaje" action="#{partidaBean.crearPartida()}" ajax="false"/>
 
-                    <br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/>
 
                 </h:form>
                 <h:form>

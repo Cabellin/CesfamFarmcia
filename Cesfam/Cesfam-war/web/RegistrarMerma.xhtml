@@ -8,13 +8,15 @@
     <h:head>
         <title>Registrar Merma</title>
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
+        <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body style="background-image: url('../resources/images/fondo-01.jpg');">
+    <h:body style="background-image: url('../resources/images/farmacia1.jpg');">
         <center>
-            <h1>REGISTRAR MERMA</h1>
+            <ui:include src="includes/menu.xhtml"/> 
+            <br/><br/>
             <h:form id="form">
                 <p:messages id="mensaje" autoUpdate="false"/>
-                <p:panel id="Registrar" header="REGISTRO" style="margin-top: 20px ;height:680px; width: 600px;">
+                <p:panel id="Registrar" header="REGISTRO" style="margin-top: 20px ;height:320px; width: 600px;">
                     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px" columnClasses="label, value">
                         <h:outputText value="Cantidad" />
                         <p:inputNumber value="#{mermaBean.merma.cantidad}" minValue="1" decimalSeparator="none" thousandSeparator="." required="true" requiredMessage="Debe ingresar una cantidad a desechar"/>
@@ -34,6 +36,15 @@
                         </p:selectOneListbox>
 
                         <p:commandButton value="Registrar" update="mensaje" action="#{mermaBean.registrarMerma()}" ajax="false"/>
+
+                        <p:commandButton value="Reducir stock físico" actionListener="#{dialogView.destroyWorld}" update="mensaje">
+                            <p:confirm header="Confirmación" message="¿Se ha hecho una auditoría al respecto?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
                     </h:panelGrid>
                 </p:panel>
 
