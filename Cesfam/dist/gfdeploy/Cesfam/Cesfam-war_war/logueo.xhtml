@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cesfam Farmacia - Login</title>
+    </h:head>
+    <h:body style="background-image: url('../resources/images/fondo-01.jpg')">
+        <h:form>
+            <p:growl id="msgs" sticky="true" showDetail="true" life="3000" />
+            <center>
+                <h:graphicImage library="images" name="logoCesfam.png" height="30%" width="30%"/>
+                <br></br>
+                <p:panel id="login" header="Acceso al Sistema" style="margin-top: 20px; margin-bottom:20px; width: 400px;" >
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        
+                        <h:outputLabel for="username" value="Nombre de Usuario:" />
+                        <p:inputText id="username" value="#{usuarioBean.nomUsu}" required="true" label="username" size="15" />
+                        <h:outputLabel for="password" value="Clave:" />
+                        <p:password id="password" value="#{usuarioBean.contrasena}" required="true" label="password" size="15"/>
+                        <f:facet name="footer">
+                            <p:commandButton class="btnn" style="color: #323133" value="Login" update="msgs" actionListener="#{usuarioBean.login}"
+                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:panel>
+
+            </center>
+        </h:form>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (!args.validationFailed || args.loggedIn) {
+                    setTimeout(function () {
+                        window.location = args.view;
+                    }, 800);
+                }
+            }
+            
+        </script>
+        
+        
+    </h:body>
+</html>
+
+

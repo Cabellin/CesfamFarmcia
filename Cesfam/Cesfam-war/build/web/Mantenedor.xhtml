@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Mantenedor</title>
+        <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
+    </h:head>
+    <h:body style="background-image: url('../resources/images/fondo-01.jpg');">
+        <center>              
+            <ui:include src="includes/menu.xhtml"/> <!-- Para incluir el menu -->
+
+            <h1>Mantenedor de Medicamentos</h1>
+
+            <h:form id="form">
+                <p:messages id="mensaje" autoUpdate="false"/>
+
+                <p:dataTable id="mantenedor" var="m" value="#{medicamentoBean.medicamentos}"  widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Buscador: " /> &nbsp;&nbsp; 
+                            <p:inputText id="globalFilter" onkeyup="PF('filtro').filter()" style="width:185px" placeholder="Ingrese su búsqueda"/>
+                        </p:outputPanel>
+                    </f:facet>
+
+                    <p:column headerText="Código" filterBy="#{m.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{m.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre Genérico" filterBy="#{m.nomGenerico}" filterMatchMode="contains">
+                        <h:outputText value="#{m.nomGenerico}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre Comercial" filterBy="#{m.nomComercial}" filterMatchMode="contains">
+                        <h:outputText value="#{m.nomComercial}"/>
+                    </p:column>
+
+                    <p:column headerText="Acción Farmacológica" filterBy="#{m.accionFarm}" filterMatchMode="contains">
+                        <h:outputText value="#{m.accionFarm}"/>
+                    </p:column>
+
+                    <p:column headerText="Vía de Administración" filterBy="#{m.viaAdministracion}" filterMatchMode="contains">
+                        <h:outputText value="#{m.viaAdministracion}"/>
+                    </p:column>
+
+                    <p:column headerText="Presentación" filterBy="#{m.presentacion}" filterMatchMode="contains">
+                        <h:outputText value="#{m.presentacion}"/>
+                    </p:column>
+                    <p:column headerText="Unidad por Caja" filterBy="#{m.UPorCaja}" filterMatchMode="contains">
+
+                        <h:outputText value="#{m.UPorCaja}"/>
+                    </p:column>
+
+                    <p:column headerText="Contenido" filterBy="#{m.contenido}" filterMatchMode="contains">
+                        <h:outputText value="#{m.contenido}"/>
+                    </p:column>
+
+                    <p:column headerText="Laboratorio" filterBy="#{m.laboratorioId.descripcion}" filterMatchMode="contains">
+                        <h:outputText value="#{m.laboratorioId.descripcion}"/>
+                    </p:column>
+
+                    <p:column headerText="Stock Disponible" filterBy="#{m.stockDisponible}" filterMatchMode="contains">
+                        <h:outputText value="#{m.stockDisponible}"/>
+                    </p:column>
+
+                    <p:column headerText="Stock Físico" filterBy="#{m.stockFisico}" filterMatchMode="contains">
+                        <h:outputText value="#{m.stockFisico}"/>
+                    </p:column>
+
+                    <p:column style="width:32px">
+                        <p:commandButton update=":form" icon="ui-icon-search" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </center>
+
+        <script type="text/javascript">
+            function justNumbers(e)
+            {
+                var keynum = window.event ? window.event.keyCode : e.which;
+                if (keynum == 8)
+                    return true;
+
+                return /\d/.test(String.fromCharCode(keynum));
+            }
+
+            function letras(e)
+            {
+                var tecla = window.event ? window.event.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+
+                patron = /[A-Za-z\s]/; // 4
+                te = String.fromCharCode(tecla); // 5
+                return patron.test(te);
+
+            }
+
+        </script>
+
+
+        <h:outputScript name="js/spanishLocale.js" />
+    </h:body>
+</html>
