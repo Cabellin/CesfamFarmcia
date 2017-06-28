@@ -17,13 +17,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.DragDropEvent;
+import pojos.AccionFarm;
 import pojos.Compuesto;
+import pojos.Laboratorio;
 import pojos.Medicamento;
 import pojos.MedicamentoCompuesto;
 import pojos.MedicamentoCompuestoPK;
 import pojos.NomGenerico;
 import pojos.Presentacion;
 import pojos.ViaAdministracion;
+import services.AccionFarmFacadeLocal;
 import services.CompuestoFacadeLocal;
 import services.LaboratorioFacadeLocal;
 import services.MedicamentoFacadeLocal;
@@ -39,6 +42,9 @@ import services.ViaAdministracionFacadeLocal;
 @ManagedBean
 @SessionScoped
 public class MedicamentoBean implements Serializable {
+
+    @EJB
+    private AccionFarmFacadeLocal accionFarmFacade;
 
     @EJB
     private MedicamentoFacadeLocal medicamentoFacade;
@@ -107,9 +113,17 @@ public class MedicamentoBean implements Serializable {
     public List<ViaAdministracion> getViasAdm() {
         return viaAdmFacade.findAll();
     }
+    
+    public List<AccionFarm> getAcciones(){
+        return accionFarmFacade.findAll();
+    }
 
     public List<NomGenerico> getNombresGen() {
         return nomGenFacade.findAll();
+    }
+    
+    public List<Laboratorio> getLaboratorios(){
+        return laboratorioFacade.findAll();
     }
 
     public MedicamentoBean() {
@@ -206,9 +220,9 @@ public class MedicamentoBean implements Serializable {
             m.setCodigo(medicamento.getCodigo());
             m.setNomGenericoId(nomGenFacade.find(medicamento.getNomGenericoId().getId()));
             m.setNomComercial(medicamento.getNomComercial());
+            m.setContenido(medicamento.getContenido());
             m.setViaAdministracionId(viaAdmFacade.find(medicamento.getViaAdministracionId().getId()));
             m.setPresentacionId(presentacionFacade.find(medicamento.getPresentacionId().getId()));
-            m.setContenido(medicamento.getContenido());
             m.setUPorCaja(medicamento.getUPorCaja());
             m.setStockDisponible(BigInteger.ZERO);
             m.setStockFisico(BigInteger.ZERO);
@@ -224,6 +238,11 @@ public class MedicamentoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe editar los datos de los compuestos", ""));
             return "PasoDos";
         }
+    }
+    
+    public String editarMedicamentoCompuesto() {
+//        seleccionados = mc;
+        return "cambiarCompuestos?faces-redirect=true";
     }
 
     public String eliminarMedicamento(Medicamento medicamento) {

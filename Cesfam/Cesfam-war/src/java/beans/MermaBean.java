@@ -68,6 +68,10 @@ public class MermaBean implements Serializable {
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
     }
+    
+    public List<RegistroMerma> getMermas(){
+        return mermaFacade.findAll();
+    }
 
     public List<String> motivos() {
         List<String> m = new ArrayList<String>();

@@ -19,63 +19,7 @@
             <h:form id="form">
                 <p:messages id="mensaje" autoUpdate="false"/>
 
-                <p:dataTable id="mantenedor" var="m" value="#{medicamentoBean.medicamentos}"  widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
-                    <f:facet name="header">
-                        <p:outputPanel>
-                            <h:outputText value="Buscador: " /> &nbsp;&nbsp; 
-                            <p:inputText id="globalFilter" onkeyup="PF('filtro').filter()" style="width:185px" placeholder="Ingrese su búsqueda"/>
-                        </p:outputPanel>
-                    </f:facet>
-
-                    <p:column headerText="Código" filterBy="#{m.codigo}" filterMatchMode="contains">
-                        <h:outputText value="#{m.codigo}"/>
-                    </p:column>
-
-                    <p:column headerText="Nombre Genérico" filterBy="#{m.nomGenerico}" filterMatchMode="contains">
-                        <h:outputText value="#{m.nomGenerico}"/>
-                    </p:column>
-
-                    <p:column headerText="Nombre Comercial" filterBy="#{m.nomComercial}" filterMatchMode="contains">
-                        <h:outputText value="#{m.nomComercial}"/>
-                    </p:column>
-
-                    <p:column headerText="Acción Farmacológica" filterBy="#{m.accionFarm}" filterMatchMode="contains">
-                        <h:outputText value="#{m.accionFarm}"/>
-                    </p:column>
-
-                    <p:column headerText="Vía de Administración" filterBy="#{m.viaAdministracion}" filterMatchMode="contains">
-                        <h:outputText value="#{m.viaAdministracion}"/>
-                    </p:column>
-
-                    <p:column headerText="Presentación" filterBy="#{m.presentacion}" filterMatchMode="contains">
-                        <h:outputText value="#{m.presentacion}"/>
-                    </p:column>
-                    <p:column headerText="Unidad por Caja" filterBy="#{m.UPorCaja}" filterMatchMode="contains">
-
-                        <h:outputText value="#{m.UPorCaja}"/>
-                    </p:column>
-
-                    <p:column headerText="Contenido" filterBy="#{m.contenido}" filterMatchMode="contains">
-                        <h:outputText value="#{m.contenido}"/>
-                    </p:column>
-
-                    <p:column headerText="Laboratorio" filterBy="#{m.laboratorioId.descripcion}" filterMatchMode="contains">
-                        <h:outputText value="#{m.laboratorioId.descripcion}"/>
-                    </p:column>
-
-                    <p:column headerText="Stock Disponible" filterBy="#{m.stockDisponible}" filterMatchMode="contains">
-                        <h:outputText value="#{m.stockDisponible}"/>
-                    </p:column>
-
-                    <p:column headerText="Stock Físico" filterBy="#{m.stockFisico}" filterMatchMode="contains">
-                        <h:outputText value="#{m.stockFisico}"/>
-                    </p:column>
-
-                    <p:column style="width:32px">
-                        <p:commandButton update=":form" icon="ui-icon-search" />
-                    </p:column>
-                </p:dataTable>
-                <p:dataTable id="mantenedor2" var="m" value="#{medicamentoBean.medicamentos}" editable="true" widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
+                <p:dataTable id="mantenedor2" var="m" value="#{medicamentoBean.medicamentos}" widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
                     <f:facet name="header">
                         Mantenedor de Medicamentos
                     </f:facet>
@@ -115,22 +59,91 @@
                             <f:facet name="input"><p:inputText value="#{m.nomComercial}" style="width:100%"/></f:facet>
                         </p:cellEditor>
                     </p:column>
-
-                    <p:column headerText="Color">
+                    
+                    <p:column headerText="Vía de Administración">
                         <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
+                            <f:facet name="output"><h:outputText value="#{m.viaAdministracionId.descripcion}" /></f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{car.color}" style="width:100%">
-                                    <f:selectItems value="#{dtEditView.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                                <h:selectOneMenu value="#{m.viaAdministracionId.descripcion}" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.viasAdm}" var="via" itemLabel="#{via.descripcion}" itemValue="#{via.id}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
+                    
+                    <p:column headerText="Presentación">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.presentacionId.descripcion}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{m.presentacionId.descripcion}" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.presentaciones}" var="pre" itemLabel="#{pre.descripcion}" itemValue="#{pre.id}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Unidad por caja">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.UPorCaja}" /></f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{m.UPorCaja}" minValue="1" decimalSeparator="none" thousandSeparator="." required="true" requiredMessage="Debe ingresar unidades por cada caja del medicamento" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Contenido">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.contenido}" /></f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{m.contenido}" minValue="1" thousandSeparator="." decimalSeparator="none" required="true" requiredMessage="Debe ingresar contenido" onkeypress="return justNumbers(event);" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Unidad Contenido">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.unidadCont}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{m.unidadCont}" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.unidadesMedida}" var="u" itemLabel="#{u}" itemValue="#{u}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Laboratorio">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.laboratorioId.descripcion}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{m.laboratorioId.descripcion}" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.laboratorios}" var="lab" itemLabel="#{lab.descripcion}" itemValue="#{lab.id}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Stock Disponible">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.stockDisponible}" /></f:facet>
+                            <f:facet name="input"><h:outputText value="#{m.stockDisponible}" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    
+                    <p:column headerText="Stock Físico">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{m.stockFisico}" /></f:facet>
+                            <f:facet name="input"><h:outputText value="#{m.stockFisico}" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
                     <p:column style="width:32px">
-                        <p:rowEditor />
+                        <p:rowEditor id="editar"/>
+                        <p:tooltip for="editar" value ="Editar" position="left"/>
                     </p:column>
+                    
+                    <p:column style="width:34px">
+                        <p:commandButton id="editarCompuestos" action="#{medicamentoBean.editarMedicamentoCompuesto()}" icon="ui-icon-plus"/>
+                        <p:tooltip for="editarCompuestos" value="Modificar compuesto" position="left"/>
+                    </p:column>
+                    
                 </p:dataTable>
+                
             </h:form>
         </center>
 
