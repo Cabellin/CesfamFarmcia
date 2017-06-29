@@ -21,7 +21,6 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -141,7 +140,7 @@ public class UsuarioBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         Usuario u = usuarioFacade.find(nomUsu);
-        byte[] encoded = Base64.encodeBase64(contrasena.getBytes());   
+        byte[] encoded = Base64.encodeBase64(contrasena.getBytes());
 
         if (u != null && contrasena != null && encoded.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
             loggedIn = true;
