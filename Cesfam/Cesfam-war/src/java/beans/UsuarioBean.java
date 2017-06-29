@@ -141,9 +141,9 @@ public class UsuarioBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         Usuario u = usuarioFacade.find(nomUsu);
-        byte[] encoded = DigestUtils.md5(contrasena.getBytes());
+        //byte[] encoded = DigestUtils.md2(contrasena.getBytes());
 
-        if (u != null && contrasena != null && encoded.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
+        if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", u.getFuncionarioRut().getNombres() + " " + u.getFuncionarioRut().getApellidoPat());
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);

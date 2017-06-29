@@ -22,26 +22,26 @@
                         <p:inputText value="#{medicamentoBean.medicamento.codigo}" required="true" onkeypress="return justNumbers(event);" requiredMessage="Debe ingresar un código identificador" maxlength="20"/>
 
                         <p:outputLabel for="nombreGenerico" value="Nombre Genérico" />
-                        <p:selectOneListbox id="nombreGenerico" value="#{medicamentoBean.medicamento.nomGenericoId}" filter="true" filterMatchMode="contains" style="width: 300px">
-                            <f:selectItems value="#{medicamentoBean.nombresGen}" var="ng" itemLabel="#{ng.descripcion}" itemValue="#{ng}" />
+                        <p:selectOneListbox id="nombreGenerico" value="#{medicamentoBean.nomGId}" filter="true" filterMatchMode="contains" style="width: 300px">
+                            <f:selectItems value="#{medicamentoBean.nombresGen}" var="ng" itemLabel="#{ng.descripcion}" itemValue="#{ng.id}" />
                         </p:selectOneListbox>
 
                         <h:outputText value="Nombre Comercial" />
                         <p:inputText value="#{medicamentoBean.medicamento.nomComercial}" required="true" requiredMessage="Debe ingresar el nombre comercial del medicamento" onkeypress="return letras(event);"/>
 
-                        <h:outputText value="Acción Farmacológica" />
-                        <p:inputText value="#{medicamentoBean.medicamento.accionFarmList}" required="true" requiredMessage="Debe ingresar la acción del medicamento " onkeypress="return letras(event);"/>
-
-                        <p:outputLabel for="viaAdm" value="Via de Administración" />
-                        <p:selectManyMenu id="viaAdm" value="#{medicamentoBean.viasAdm}" var="va" filter="true" filterMatchMode="contains" showCheckbox="true">
-                            <p:column>
-                                <h:outputText value="#{va.descripcion}" />
-                            </p:column>
+                        <p:outputLabel for="acF" value="Acción Farmacológica" />
+                        <p:selectManyMenu id="acF" value="#{medicamentoBean.accionFarmList}" filter="true" filterMatchMode="contains" showCheckbox="true">
+                            <f:selectItems value="#{medicamentoBean.acciones}" var="a" itemLabel="#{a.descripcion}" itemValue="#{a}" />
                         </p:selectManyMenu>
+                        
+                        <p:outputLabel for="viaAdm" value="Via de Administración" />
+                        <p:selectOneListbox id="viaAdm" value="#{medicamentoBean.viaAdmId}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{medicamentoBean.viasAdm}" var="va" itemLabel="#{va.descripcion}" itemValue="#{va.id}" />
+                        </p:selectOneListbox>
 
                         <p:outputLabel for="presentacion" value="Presentación" />
-                        <p:selectOneListbox id="presentacion" value="#{medicamentoBean.medicamento.presentacionId}" filter="true" filterMatchMode="contains" style="width: 300px">
-                            <f:selectItems value="#{medicamentoBean.presentaciones}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p}" />
+                        <p:selectOneListbox id="presentacion" value="#{medicamentoBean.presId}" filter="true" filterMatchMode="contains" style="width: 300px">
+                            <f:selectItems value="#{medicamentoBean.presentaciones}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p.id}" />
                         </p:selectOneListbox>
 
                         <h:outputText value="Unidad por Caja" />
@@ -51,7 +51,7 @@
                         <p:inputNumber value="#{medicamentoBean.medicamento.contenido}" minValue="1" thousandSeparator="." decimalSeparator="none" required="true" requiredMessage="Debe ingresar contenido" onkeypress="return justNumbers(event);" />
 
                         <h:outputText />
-                        <p:selectOneMenu id="unidad" value="#{medicamentoBean.unidadMedida}" style="width:150px" required="true" requiredMessage="Debe escoger una unidad de medida al contenido">
+                        <p:selectOneMenu id="unidad" value="#{medicamentoBean.medicamento.unidadCont}" style="width:150px" required="true" requiredMessage="Debe escoger una unidad de medida al contenido">
                             <f:selectItem itemLabel="Seleccione medida" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{medicamentoBean.unidadesMedida}" var="u" itemLabel="#{u}" itemValue="#{u}"/>
                         </p:selectOneMenu>

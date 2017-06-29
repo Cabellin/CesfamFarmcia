@@ -66,14 +66,58 @@ public class MedicamentoBean implements Serializable {
 
     private List<MedicamentoCompuesto> seleccionados;
     private Medicamento medicamento;
-    private String unidadMedida;
     private List<Compuesto> compuestosBd;
     private List<Medicamento> filtrados;
+    private int nomGId;
+    private int viaAdmId;
+    private int presId;
+    private int labId;
+    private List<AccionFarm> accionFarmList;
 
     public List<Medicamento> getFiltrados() {
         return filtrados;
     }
 
+    public List<AccionFarm> getAccionFarmList() {
+        return accionFarmList;
+    }
+
+    public void setAccionFarmList(List<AccionFarm> accionFarmList) {
+        this.accionFarmList = accionFarmList;
+    }
+
+    public int getLabId() {
+        return labId;
+    }
+
+    public void setLabId(int labId) {
+        this.labId = labId;
+    }
+
+    public int getViaAdmId() {
+        return viaAdmId;
+    }
+
+    public void setViaAdmId(int viaAdmId) {
+        this.viaAdmId = viaAdmId;
+    }
+
+    public int getPresId() {
+        return presId;
+    }
+
+    public void setPresId(int presId) {
+        this.presId = presId;
+    }
+
+    public int getNomGId() {
+        return nomGId;
+    }
+
+    public void setNomGId(int nomGId) {
+        this.nomGId = nomGId;
+    }  
+    
     public void setFiltrados(List<Medicamento> filtrados) {
         this.filtrados = filtrados;
     }
@@ -84,14 +128,6 @@ public class MedicamentoBean implements Serializable {
 
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
-    }
-
-    public String getUnidadMedida() {
-        return unidadMedida;
-    }
-
-    public void setUnidadMedida(String unidadMedida) {
-        this.unidadMedida = unidadMedida;
     }
 
     public List<Compuesto> getCompuestosBd() {
@@ -170,7 +206,6 @@ public class MedicamentoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "El código ya existe en nuestra base de datos, vuelva a intentarlo", ""));
             return "RegistrarMedicamentos";
         }
-
     }
 
     public String volverRegistrar() {
@@ -179,7 +214,6 @@ public class MedicamentoBean implements Serializable {
 
     public String volverPartida() {
         medicamento = new Medicamento();
-        unidadMedida = "";
         return "partida";
     }
 
@@ -213,29 +247,35 @@ public class MedicamentoBean implements Serializable {
         compuestosBd.remove(c);
     }
 
+    public void quitarCompuesto(MedicamentoCompuesto mc) {
+        compuestosBd.add(mc.getCompuesto());
+        seleccionados.remove(mc);
+    }
+    
     public String crearMedicamento() {
         try {
             verificarUnidad();
             Medicamento m = new Medicamento();
             m.setCodigo(medicamento.getCodigo());
-            m.setNomGenericoId(nomGenFacade.find(medicamento.getNomGenericoId().getId()));
+            m.setNomGenericoId(nomGenFacade.find(nomGId));
             m.setNomComercial(medicamento.getNomComercial());
             m.setContenido(medicamento.getContenido());
-            m.setViaAdministracionId(viaAdmFacade.find(medicamento.getViaAdministracionId().getId()));
-            m.setPresentacionId(presentacionFacade.find(medicamento.getPresentacionId().getId()));
+            m.setUnidadCont(medicamento.getUnidadCont());
+            //m.setAccionFarmList(accionFarmList);
+            m.setViaAdministracionId(viaAdmFacade.find(viaAdmId));
+            m.setPresentacionId(presentacionFacade.find(presId));
             m.setUPorCaja(medicamento.getUPorCaja());
             m.setStockDisponible(BigInteger.ZERO);
             m.setStockFisico(BigInteger.ZERO);
-            m.setLaboratorioId(laboratorioFacade.find(medicamento.getLaboratorioId().getId()));
+            m.setLaboratorioId(laboratorioFacade.find(labId));
             m.setMedicamentoCompuestoList(seleccionados);
             this.medicamentoFacade.create(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));
             medicamento = new Medicamento();
-            unidadMedida = "";
             seleccionados = new ArrayList<MedicamentoCompuesto>();
             return "partida";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe editar los datos de los compuestos", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "PasoDos";
         }
     }

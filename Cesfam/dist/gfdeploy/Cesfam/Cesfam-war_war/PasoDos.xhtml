@@ -19,8 +19,8 @@
                     <h:panelGrid id="laboratoriosPanel" columns="3" cellpadding="5">                       
 
                         <h:outputText value="Laboratorio" />
-                        <p:selectOneMenu id="laboratorios" value="#{medicamentoBean.medicamento.laboratorioId}" style="width:150px" required="true" requiredMessage="Debe escoger un laboratorio">
-                            <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="#{null}" noSelectionOption="true" />
+                        <p:selectOneMenu id="laboratorios" value="#{medicamentoBean.labId}" style="width:150px" required="true" requiredMessage="Debe escoger un laboratorio">
+                            <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{laboratorioBean.laboratorios}" var="l" itemLabel="#{l.descripcion}" itemValue="#{l.id}" />
                         </p:selectOneMenu>
                     </h:panelGrid>                   
@@ -61,6 +61,11 @@
 
                                 <p:ajax event="cellEdit" listener="#{medicamentoBean.onCellEdit}"/>
 
+                                <p:column style="width:34px">
+                                    <p:commandButton id="eliminar" action='#{medicamentoBean.quitarCompuesto(cm)}' update=":form" icon="ui-icon-closethick" />
+                                    <p:tooltip for="eliminar" value="Quitar" position="right"/>
+                                </p:column>
+                                
                                 <p:column headerText="Nombre">
                                     <h:outputText value="#{cm.compuesto.descripcion}" />
                                 </p:column>
@@ -68,7 +73,7 @@
                                 <p:column headerText="Cantidad" >
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{cm.cantidad}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{cm.cantidad}" style="width:96%" label="Cantidad" onkeypress="return justNumbers(event);"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{cm.cantidad}" style="width:96%" required="true" requiredMessage="Debe ingresar cantidad" label="Cantidad" onkeypress="return justNumbers(event);"/></f:facet>
                                     </p:cellEditor>
                                 </p:column>
 
@@ -82,7 +87,7 @@
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
-
+                                
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
