@@ -9,7 +9,6 @@
     </h:head>
      <h:body>
         <h:form>
-            <p:growl id="messages" showDetail="true" sticky="true" life="2000"/>
             <p:menubar id="menu" model="#{usuarioBean.generarMenu()}">
                 <f:facet name="options">
                     <p:commandButton rendered="#{usuarioBean.verificarSesionMenu()}" value="CERRAR SESION"  action="#{usuarioBean.cerrarSesion()}" immediate="true"/>
