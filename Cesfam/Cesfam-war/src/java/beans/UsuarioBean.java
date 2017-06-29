@@ -20,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
@@ -140,9 +141,9 @@ public class UsuarioBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         Usuario u = usuarioFacade.find(nomUsu);
-        //contrasena = DigestUtils.md5Hex(contrasena);
+        byte[] encoded = Base64.encodeBase64(contrasena.getBytes());   
 
-        if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
+        if (u != null && contrasena != null && encoded.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", u.getFuncionarioRut().getNombres() + " " + u.getFuncionarioRut().getApellidoPat());
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
