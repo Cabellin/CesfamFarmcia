@@ -12,7 +12,7 @@ import pojos.RecetaMedicamento;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class RecetaMedicamentoFacade extends AbstractFacade<RecetaMedicamento> implements RecetaMedicamentoFacadeLocal {

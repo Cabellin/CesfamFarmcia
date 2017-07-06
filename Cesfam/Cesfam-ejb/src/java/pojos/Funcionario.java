@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "FUNCIONARIO")
@@ -64,11 +64,11 @@ public class Funcionario implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_MAT")
     private String apellidoMat;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "funcionarioRut")
-    private Usuario usuario;
     @JoinColumn(name = "TIPO_FUNC_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private TipoFunc tipoFuncId;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "funcionarioRut")
+    private Usuario usuario;
 
     public Funcionario() {
     }
@@ -125,20 +125,20 @@ public class Funcionario implements Serializable {
         this.apellidoMat = apellidoMat;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public TipoFunc getTipoFuncId() {
         return tipoFuncId;
     }
 
     public void setTipoFuncId(TipoFunc tipoFuncId) {
         this.tipoFuncId = tipoFuncId;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

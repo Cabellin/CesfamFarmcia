@@ -71,7 +71,7 @@ public class MedicamentoBean implements Serializable {
     private int nomGId;
     private int viaAdmId;
     private int presId;
-    private int labId;
+    private BigDecimal labId;
     private List<AccionFarm> accionFarmList;
 
     public List<Medicamento> getFiltrados() {
@@ -86,11 +86,11 @@ public class MedicamentoBean implements Serializable {
         this.accionFarmList = accionFarmList;
     }
 
-    public int getLabId() {
+    public BigDecimal getLabId() {
         return labId;
     }
 
-    public void setLabId(int labId) {
+    public void setLabId(BigDecimal labId) {
         this.labId = labId;
     }
 
@@ -257,17 +257,18 @@ public class MedicamentoBean implements Serializable {
             verificarUnidad();
             Medicamento m = new Medicamento();
             m.setCodigo(medicamento.getCodigo());
+            m.setLaboratorioId(laboratorioFacade.find(labId));
             m.setNomGenericoId(nomGenFacade.find(nomGId));
             m.setNomComercial(medicamento.getNomComercial());
             m.setContenido(medicamento.getContenido());
             m.setUnidadCont(medicamento.getUnidadCont());
-            //m.setAccionFarmList(accionFarmList);
+            m.setAccionFarmList(accionFarmList);
             m.setViaAdministracionId(viaAdmFacade.find(viaAdmId));
             m.setPresentacionId(presentacionFacade.find(presId));
             m.setUPorCaja(medicamento.getUPorCaja());
             m.setStockDisponible(BigInteger.ZERO);
             m.setStockFisico(BigInteger.ZERO);
-            m.setLaboratorioId(laboratorioFacade.find(labId));
+            
             m.setMedicamentoCompuestoList(seleccionados);
             this.medicamentoFacade.create(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));

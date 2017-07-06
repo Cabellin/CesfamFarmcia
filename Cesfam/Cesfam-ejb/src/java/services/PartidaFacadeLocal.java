@@ -11,7 +11,7 @@ import pojos.Partida;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface PartidaFacadeLocal {

@@ -11,7 +11,7 @@ import pojos.Medicamento;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface MedicamentoFacadeLocal {

@@ -12,7 +12,7 @@ import pojos.Laboratorio;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class LaboratorioFacade extends AbstractFacade<Laboratorio> implements LaboratorioFacadeLocal {

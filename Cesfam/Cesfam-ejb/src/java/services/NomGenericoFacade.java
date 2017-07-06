@@ -12,7 +12,7 @@ import pojos.NomGenerico;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class NomGenericoFacade extends AbstractFacade<NomGenerico> implements NomGenericoFacadeLocal {

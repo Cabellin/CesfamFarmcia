@@ -12,7 +12,7 @@ import pojos.AccionFarm;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class AccionFarmFacade extends AbstractFacade<AccionFarm> implements AccionFarmFacadeLocal {

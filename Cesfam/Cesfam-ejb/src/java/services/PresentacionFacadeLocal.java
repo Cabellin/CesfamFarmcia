@@ -11,7 +11,7 @@ import pojos.Presentacion;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface PresentacionFacadeLocal {

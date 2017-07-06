@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "MEDICAMENTO_COMPUESTO")
@@ -51,12 +51,12 @@ public class MedicamentoCompuesto implements Serializable {
     @Size(max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Medicamento medicamento;
     @JoinColumn(name = "COMPUESTO_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Compuesto compuesto;
+    @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Medicamento medicamento;
 
     public MedicamentoCompuesto() {
     }
@@ -107,20 +107,20 @@ public class MedicamentoCompuesto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Medicamento getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(Medicamento medicamento) {
-        this.medicamento = medicamento;
-    }
-
     public Compuesto getCompuesto() {
         return compuesto;
     }
 
     public void setCompuesto(Compuesto compuesto) {
         this.compuesto = compuesto;
+    }
+
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
+
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
     }
 
     @Override

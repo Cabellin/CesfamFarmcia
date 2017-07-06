@@ -7,7 +7,7 @@ import pojos.Compuesto;
 import pojos.Medicamento;
 import pojos.MedicamentoCompuestoPK;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T04:19:13")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T08:34:08")
 @StaticMetamodel(MedicamentoCompuesto.class)
 public class MedicamentoCompuesto_ { 
 

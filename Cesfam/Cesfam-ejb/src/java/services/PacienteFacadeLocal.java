@@ -11,7 +11,7 @@ import pojos.Paciente;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface PacienteFacadeLocal {

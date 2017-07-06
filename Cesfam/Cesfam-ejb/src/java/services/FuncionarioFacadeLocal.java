@@ -11,7 +11,7 @@ import pojos.Funcionario;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface FuncionarioFacadeLocal {

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "MEDICAMENTO_PARTIDA")
@@ -49,12 +49,12 @@ public class MedicamentoPartida implements Serializable {
     @Column(name = "FECHA_VENCIMIENTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaVencimiento;
-    @JoinColumn(name = "PARTIDA_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Partida partida;
     @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicamento medicamento;
+    @JoinColumn(name = "PARTIDA_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Partida partida;
 
     public MedicamentoPartida() {
     }
@@ -97,20 +97,20 @@ public class MedicamentoPartida implements Serializable {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public Partida getPartida() {
-        return partida;
-    }
-
-    public void setPartida(Partida partida) {
-        this.partida = partida;
-    }
-
     public Medicamento getMedicamento() {
         return medicamento;
     }
 
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
+    }
+
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
     }
 
     @Override

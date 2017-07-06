@@ -11,7 +11,7 @@ import pojos.RegistroMerma;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface RegistroMermaFacadeLocal {

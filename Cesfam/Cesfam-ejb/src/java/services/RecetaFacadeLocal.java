@@ -11,7 +11,7 @@ import pojos.Receta;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface RecetaFacadeLocal {

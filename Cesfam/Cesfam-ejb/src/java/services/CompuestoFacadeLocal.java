@@ -11,7 +11,7 @@ import pojos.Compuesto;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface CompuestoFacadeLocal {

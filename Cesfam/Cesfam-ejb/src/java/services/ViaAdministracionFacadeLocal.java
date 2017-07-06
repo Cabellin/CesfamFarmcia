@@ -11,7 +11,7 @@ import pojos.ViaAdministracion;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface ViaAdministracionFacadeLocal {

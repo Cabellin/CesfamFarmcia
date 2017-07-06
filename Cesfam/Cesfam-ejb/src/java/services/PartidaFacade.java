@@ -12,7 +12,7 @@ import pojos.Partida;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class PartidaFacade extends AbstractFacade<Partida> implements PartidaFacadeLocal {

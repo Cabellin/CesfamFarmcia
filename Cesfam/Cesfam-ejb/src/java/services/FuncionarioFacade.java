@@ -12,7 +12,7 @@ import pojos.Funcionario;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class FuncionarioFacade extends AbstractFacade<Funcionario> implements FuncionarioFacadeLocal {

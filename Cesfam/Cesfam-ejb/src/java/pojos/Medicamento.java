@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "MEDICAMENTO")
@@ -81,23 +81,23 @@ public class Medicamento implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicamentoCodigo")
     private List<RegistroMerma> registroMermaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicamento")
-    private List<RecetaMedicamento> recetaMedicamentoList;
+    private List<MedicamentoCompuesto> medicamentoCompuestoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicamento")
     private List<MedicamentoPartida> medicamentoPartidaList;
-    @JoinColumn(name = "VIA_ADMINISTRACION_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private ViaAdministracion viaAdministracionId;
-    @JoinColumn(name = "PRESENTACION_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Presentacion presentacionId;
-    @JoinColumn(name = "NOM_GENERICO_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private NomGenerico nomGenericoId;
     @JoinColumn(name = "LABORATORIO_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Laboratorio laboratorioId;
+    @JoinColumn(name = "NOM_GENERICO_ID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private NomGenerico nomGenericoId;
+    @JoinColumn(name = "PRESENTACION_ID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Presentacion presentacionId;
+    @JoinColumn(name = "VIA_ADMINISTRACION_ID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private ViaAdministracion viaAdministracionId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicamento")
-    private List<MedicamentoCompuesto> medicamentoCompuestoList;
+    private List<RecetaMedicamento> recetaMedicamentoList;
 
     public Medicamento() {
     }
@@ -191,12 +191,12 @@ public class Medicamento implements Serializable {
     }
 
     @XmlTransient
-    public List<RecetaMedicamento> getRecetaMedicamentoList() {
-        return recetaMedicamentoList;
+    public List<MedicamentoCompuesto> getMedicamentoCompuestoList() {
+        return medicamentoCompuestoList;
     }
 
-    public void setRecetaMedicamentoList(List<RecetaMedicamento> recetaMedicamentoList) {
-        this.recetaMedicamentoList = recetaMedicamentoList;
+    public void setMedicamentoCompuestoList(List<MedicamentoCompuesto> medicamentoCompuestoList) {
+        this.medicamentoCompuestoList = medicamentoCompuestoList;
     }
 
     @XmlTransient
@@ -208,20 +208,12 @@ public class Medicamento implements Serializable {
         this.medicamentoPartidaList = medicamentoPartidaList;
     }
 
-    public ViaAdministracion getViaAdministracionId() {
-        return viaAdministracionId;
+    public Laboratorio getLaboratorioId() {
+        return laboratorioId;
     }
 
-    public void setViaAdministracionId(ViaAdministracion viaAdministracionId) {
-        this.viaAdministracionId = viaAdministracionId;
-    }
-
-    public Presentacion getPresentacionId() {
-        return presentacionId;
-    }
-
-    public void setPresentacionId(Presentacion presentacionId) {
-        this.presentacionId = presentacionId;
+    public void setLaboratorioId(Laboratorio laboratorioId) {
+        this.laboratorioId = laboratorioId;
     }
 
     public NomGenerico getNomGenericoId() {
@@ -232,21 +224,29 @@ public class Medicamento implements Serializable {
         this.nomGenericoId = nomGenericoId;
     }
 
-    public Laboratorio getLaboratorioId() {
-        return laboratorioId;
+    public Presentacion getPresentacionId() {
+        return presentacionId;
     }
 
-    public void setLaboratorioId(Laboratorio laboratorioId) {
-        this.laboratorioId = laboratorioId;
+    public void setPresentacionId(Presentacion presentacionId) {
+        this.presentacionId = presentacionId;
+    }
+
+    public ViaAdministracion getViaAdministracionId() {
+        return viaAdministracionId;
+    }
+
+    public void setViaAdministracionId(ViaAdministracion viaAdministracionId) {
+        this.viaAdministracionId = viaAdministracionId;
     }
 
     @XmlTransient
-    public List<MedicamentoCompuesto> getMedicamentoCompuestoList() {
-        return medicamentoCompuestoList;
+    public List<RecetaMedicamento> getRecetaMedicamentoList() {
+        return recetaMedicamentoList;
     }
 
-    public void setMedicamentoCompuestoList(List<MedicamentoCompuesto> medicamentoCompuestoList) {
-        this.medicamentoCompuestoList = medicamentoCompuestoList;
+    public void setRecetaMedicamentoList(List<RecetaMedicamento> recetaMedicamentoList) {
+        this.recetaMedicamentoList = recetaMedicamentoList;
     }
 
     @Override

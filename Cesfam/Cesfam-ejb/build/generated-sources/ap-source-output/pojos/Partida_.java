@@ -9,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import pojos.MedicamentoPartida;
 import pojos.Proveedor;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T04:19:13")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T08:34:08")
 @StaticMetamodel(Partida.class)
 public class Partida_ { 
 

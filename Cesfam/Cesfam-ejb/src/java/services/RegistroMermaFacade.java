@@ -12,7 +12,7 @@ import pojos.RegistroMerma;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class RegistroMermaFacade extends AbstractFacade<RegistroMerma> implements RegistroMermaFacadeLocal {

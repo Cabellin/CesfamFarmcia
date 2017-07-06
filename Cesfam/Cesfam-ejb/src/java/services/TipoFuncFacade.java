@@ -12,7 +12,7 @@ import pojos.TipoFunc;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class TipoFuncFacade extends AbstractFacade<TipoFunc> implements TipoFuncFacadeLocal {

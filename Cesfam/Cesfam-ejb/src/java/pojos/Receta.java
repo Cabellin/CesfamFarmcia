@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "RECETA")
@@ -66,12 +66,12 @@ public class Receta implements Serializable {
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receta")
     private List<RecetaMedicamento> recetaMedicamentoList;
-    @JoinColumn(name = "USUARIO_NOM_USU", referencedColumnName = "NOM_USU")
-    @ManyToOne(optional = false)
-    private Usuario usuarioNomUsu;
     @JoinColumn(name = "PACIENTE_RUT", referencedColumnName = "RUT")
     @ManyToOne(optional = false)
     private Paciente pacienteRut;
+    @JoinColumn(name = "USUARIO_NOM_USU", referencedColumnName = "NOM_USU")
+    @ManyToOne(optional = false)
+    private Usuario usuarioNomUsu;
 
     public Receta() {
     }
@@ -128,20 +128,20 @@ public class Receta implements Serializable {
         this.recetaMedicamentoList = recetaMedicamentoList;
     }
 
-    public Usuario getUsuarioNomUsu() {
-        return usuarioNomUsu;
-    }
-
-    public void setUsuarioNomUsu(Usuario usuarioNomUsu) {
-        this.usuarioNomUsu = usuarioNomUsu;
-    }
-
     public Paciente getPacienteRut() {
         return pacienteRut;
     }
 
     public void setPacienteRut(Paciente pacienteRut) {
         this.pacienteRut = pacienteRut;
+    }
+
+    public Usuario getUsuarioNomUsu() {
+        return usuarioNomUsu;
+    }
+
+    public void setUsuarioNomUsu(Usuario usuarioNomUsu) {
+        this.usuarioNomUsu = usuarioNomUsu;
     }
 
     @Override

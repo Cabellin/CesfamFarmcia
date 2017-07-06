@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Embeddable
 public class MedicamentoCompuestoPK implements Serializable {

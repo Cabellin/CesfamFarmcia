@@ -12,7 +12,7 @@ import pojos.Proveedor;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class ProveedorFacade extends AbstractFacade<Proveedor> implements ProveedorFacadeLocal {

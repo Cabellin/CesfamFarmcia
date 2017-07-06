@@ -11,7 +11,7 @@ import pojos.Usuario;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface UsuarioFacadeLocal {

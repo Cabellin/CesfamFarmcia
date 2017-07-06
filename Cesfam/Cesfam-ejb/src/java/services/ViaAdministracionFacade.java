@@ -12,7 +12,7 @@ import pojos.ViaAdministracion;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class ViaAdministracionFacade extends AbstractFacade<ViaAdministracion> implements ViaAdministracionFacadeLocal {

@@ -11,7 +11,7 @@ import pojos.Proveedor;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface ProveedorFacadeLocal {

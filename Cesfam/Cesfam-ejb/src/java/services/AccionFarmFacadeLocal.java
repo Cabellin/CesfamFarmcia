@@ -11,7 +11,7 @@ import pojos.AccionFarm;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface AccionFarmFacadeLocal {

@@ -11,7 +11,7 @@ import pojos.NomGenerico;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface NomGenericoFacadeLocal {

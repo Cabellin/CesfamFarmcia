@@ -15,7 +15,7 @@ import pojos.RecetaMedicamento;
 import pojos.RegistroMerma;
 import pojos.ViaAdministracion;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T04:19:13")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T08:34:08")
 @StaticMetamodel(Medicamento.class)
 public class Medicamento_ { 
 
@@ -30,8 +30,8 @@ public class Medicamento_ {
     public static volatile ListAttribute<Medicamento, RegistroMerma> registroMermaList;
     public static volatile SingularAttribute<Medicamento, BigInteger> stockFisico;
     public static volatile SingularAttribute<Medicamento, String> nomComercial;
-    public static volatile SingularAttribute<Medicamento, NomGenerico> nomGenericoId;
     public static volatile ListAttribute<Medicamento, MedicamentoCompuesto> medicamentoCompuestoList;
+    public static volatile SingularAttribute<Medicamento, NomGenerico> nomGenericoId;
     public static volatile SingularAttribute<Medicamento, Laboratorio> laboratorioId;
     public static volatile SingularAttribute<Medicamento, BigInteger> uPorCaja;
     public static volatile ListAttribute<Medicamento, MedicamentoPartida> medicamentoPartidaList;

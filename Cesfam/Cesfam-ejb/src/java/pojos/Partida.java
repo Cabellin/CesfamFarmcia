@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Entity
 @Table(name = "PARTIDA")
@@ -51,11 +51,11 @@ public class Partida implements Serializable {
     @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntrega;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partida")
+    private List<MedicamentoPartida> medicamentoPartidaList;
     @JoinColumn(name = "PROVEEDOR_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Proveedor proveedorId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partida")
-    private List<MedicamentoPartida> medicamentoPartidaList;
 
     public Partida() {
     }
@@ -85,14 +85,6 @@ public class Partida implements Serializable {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public Proveedor getProveedorId() {
-        return proveedorId;
-    }
-
-    public void setProveedorId(Proveedor proveedorId) {
-        this.proveedorId = proveedorId;
-    }
-
     @XmlTransient
     public List<MedicamentoPartida> getMedicamentoPartidaList() {
         return medicamentoPartidaList;
@@ -100,6 +92,14 @@ public class Partida implements Serializable {
 
     public void setMedicamentoPartidaList(List<MedicamentoPartida> medicamentoPartidaList) {
         this.medicamentoPartidaList = medicamentoPartidaList;
+    }
+
+    public Proveedor getProveedorId() {
+        return proveedorId;
+    }
+
+    public void setProveedorId(Proveedor proveedorId) {
+        this.proveedorId = proveedorId;
     }
 
     @Override

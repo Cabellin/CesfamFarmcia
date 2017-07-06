@@ -11,7 +11,7 @@ import pojos.TipoFunc;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Local
 public interface TipoFuncFacadeLocal {

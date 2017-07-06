@@ -12,7 +12,7 @@ import pojos.Compuesto;
 
 /**
  *
- * @author Pelao
+ * @author Sebastian
  */
 @Stateless
 public class CompuestoFacade extends AbstractFacade<Compuesto> implements CompuestoFacadeLocal {
