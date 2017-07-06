@@ -141,7 +141,7 @@ public class UsuarioBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         Usuario u = usuarioFacade.find(nomUsu);
-        //byte[] encoded = DigestUtils.md2(contrasena.getBytes());
+        contrasena = DigestUtils.md5Hex(contrasena);
 
         if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
             loggedIn = true;

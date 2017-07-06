@@ -30,8 +30,8 @@
                         <p:inputText value="#{medicamentoBean.medicamento.nomComercial}" required="true" requiredMessage="Debe ingresar el nombre comercial del medicamento" onkeypress="return letras(event);"/>
 
                         <p:outputLabel for="acF" value="Acción Farmacológica" />
-                        <p:selectManyMenu id="acF" value="#{medicamentoBean.accionFarmList}" filter="true" filterMatchMode="contains" showCheckbox="true">
-                            <f:selectItems value="#{medicamentoBean.acciones}" var="a" itemLabel="#{a.descripcion}" itemValue="#{a}" />
+                        <p:selectManyMenu id="acF" value="#{medicamentoBean.accionFarmListId}" filter="true" filterMatchMode="contains" showCheckbox="true">
+                            <f:selectItems value="#{medicamentoBean.acciones}" var="a" itemLabel="#{a.descripcion}" itemValue="#{a.id}" />
                         </p:selectManyMenu>
                         
                         <p:outputLabel for="viaAdm" value="Via de Administración" />

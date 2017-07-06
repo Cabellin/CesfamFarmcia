@@ -68,22 +68,22 @@ public class MedicamentoBean implements Serializable {
     private Medicamento medicamento;
     private List<Compuesto> compuestosBd;
     private List<Medicamento> filtrados;
-    private int nomGId;
-    private int viaAdmId;
-    private int presId;
+    private BigDecimal nomGId;
+    private BigDecimal viaAdmId;
+    private BigDecimal presId;
     private BigDecimal labId;
-    private List<AccionFarm> accionFarmList;
+    private List<String> accionFarmListId;
 
     public List<Medicamento> getFiltrados() {
         return filtrados;
     }
 
-    public List<AccionFarm> getAccionFarmList() {
-        return accionFarmList;
+    public List<String> getAccionFarmListId() {
+        return accionFarmListId;
     }
 
-    public void setAccionFarmList(List<AccionFarm> accionFarmList) {
-        this.accionFarmList = accionFarmList;
+    public void setAccionFarmListId(List<String> accionFarmList) {
+        this.accionFarmListId = accionFarmList;
     }
 
     public BigDecimal getLabId() {
@@ -94,30 +94,30 @@ public class MedicamentoBean implements Serializable {
         this.labId = labId;
     }
 
-    public int getViaAdmId() {
+    public BigDecimal getViaAdmId() {
         return viaAdmId;
     }
 
-    public void setViaAdmId(int viaAdmId) {
+    public void setViaAdmId(BigDecimal viaAdmId) {
         this.viaAdmId = viaAdmId;
     }
 
-    public int getPresId() {
+    public BigDecimal getPresId() {
         return presId;
     }
 
-    public void setPresId(int presId) {
+    public void setPresId(BigDecimal presId) {
         this.presId = presId;
     }
 
-    public int getNomGId() {
+    public BigDecimal getNomGId() {
         return nomGId;
     }
 
-    public void setNomGId(int nomGId) {
+    public void setNomGId(BigDecimal nomGId) {
         this.nomGId = nomGId;
-    }  
-    
+    }
+
     public void setFiltrados(List<Medicamento> filtrados) {
         this.filtrados = filtrados;
     }
@@ -149,16 +149,16 @@ public class MedicamentoBean implements Serializable {
     public List<ViaAdministracion> getViasAdm() {
         return viaAdmFacade.findAll();
     }
-    
-    public List<AccionFarm> getAcciones(){
+
+    public List<AccionFarm> getAcciones() {
         return accionFarmFacade.findAll();
     }
 
     public List<NomGenerico> getNombresGen() {
         return nomGenFacade.findAll();
     }
-    
-    public List<Laboratorio> getLaboratorios(){
+
+    public List<Laboratorio> getLaboratorios() {
         return laboratorioFacade.findAll();
     }
 
@@ -172,10 +172,27 @@ public class MedicamentoBean implements Serializable {
         return medicamentoFacade.findAll();
     }
 
+    private List<AccionFarm> ObtenerAccionesSelec(List<String> accionesId) {
+        List<AccionFarm> accionesSelec = new ArrayList<>();
+        for (String temp : accionesId) {
+            BigDecimal id = new BigDecimal(temp);
+            accionesSelec.add(accionFarmFacade.find(id));
+        }
+        return accionesSelec;
+    }
+
     public void verificarUnidad() throws Exception {
         for (MedicamentoCompuesto temp : seleccionados) {
-            if (temp.getUnidad().equals("seleccione") || temp.getUnidad() == null || temp.getCantidad() == 0) {
+            if (temp.getUnidad().equals("seleccione") || temp.getUnidad() == null || temp.getUnidad().equals("")) {
                 throw new Exception("Verificar unidad de compuestos");
+            }
+        }
+    }
+
+    public void verificarCantidad() throws Exception {
+        for (MedicamentoCompuesto temp : seleccionados) {
+            if (temp.getCantidad() == 0) {
+                throw new Exception("Verificar cantidad de compuestos");
             }
         }
     }
@@ -251,9 +268,10 @@ public class MedicamentoBean implements Serializable {
         compuestosBd.add(mc.getCompuesto());
         seleccionados.remove(mc);
     }
-    
+
     public String crearMedicamento() {
         try {
+            verificarCantidad();
             verificarUnidad();
             Medicamento m = new Medicamento();
             m.setCodigo(medicamento.getCodigo());
@@ -262,25 +280,25 @@ public class MedicamentoBean implements Serializable {
             m.setNomComercial(medicamento.getNomComercial());
             m.setContenido(medicamento.getContenido());
             m.setUnidadCont(medicamento.getUnidadCont());
-            m.setAccionFarmList(accionFarmList);
+            m.setAccionFarmList(ObtenerAccionesSelec(accionFarmListId));
             m.setViaAdministracionId(viaAdmFacade.find(viaAdmId));
             m.setPresentacionId(presentacionFacade.find(presId));
             m.setUPorCaja(medicamento.getUPorCaja());
             m.setStockDisponible(BigInteger.ZERO);
             m.setStockFisico(BigInteger.ZERO);
-            
+
             m.setMedicamentoCompuestoList(seleccionados);
             this.medicamentoFacade.create(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));
             medicamento = new Medicamento();
-            seleccionados = new ArrayList<MedicamentoCompuesto>();
-            return "partida";
+            seleccionados = new ArrayList<>();
+            return "index";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "PasoDos";
         }
     }
-    
+
     public String editarMedicamentoCompuesto() {
 //        seleccionados = mc;
         return "cambiarCompuestos?faces-redirect=true";
