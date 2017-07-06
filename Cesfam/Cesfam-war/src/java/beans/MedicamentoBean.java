@@ -5,6 +5,7 @@
  */
 package beans;
 
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.emptyType;
 import java.io.Serializable;
 import java.math.*;
 import java.util.ArrayList;
@@ -73,6 +74,15 @@ public class MedicamentoBean implements Serializable {
     private BigDecimal presId;
     private BigDecimal labId;
     private List<String> accionFarmListId;
+    private List<Compuesto> compFiltrados;
+
+    public List<Compuesto> getCompFiltrados() {
+        return compFiltrados;
+    }
+
+    public void setCompFiltrados(List<Compuesto> compFiltrados) {
+        this.compFiltrados = compFiltrados;
+    }
 
     public List<Medicamento> getFiltrados() {
         return filtrados;
@@ -174,9 +184,13 @@ public class MedicamentoBean implements Serializable {
 
     private List<AccionFarm> ObtenerAccionesSelec(List<String> accionesId) {
         List<AccionFarm> accionesSelec = new ArrayList<>();
+        AccionFarm ac = new AccionFarm();
         for (String temp : accionesId) {
             BigDecimal id = new BigDecimal(temp);
-            accionesSelec.add(accionFarmFacade.find(id));
+            ac = accionFarmFacade.find(id);
+            ac.getMedicamentoList().add(medicamentoFacade.find(medicamento.getCodigo()));
+            accionFarmFacade.edit(ac);
+            accionesSelec.add(ac);
         }
         return accionesSelec;
     }
@@ -194,6 +208,12 @@ public class MedicamentoBean implements Serializable {
             if (temp.getCantidad() == 0) {
                 throw new Exception("Verificar cantidad de compuestos");
             }
+        }
+    }
+
+    public void verificarCompuestos() throws Exception {
+        if (seleccionados.isEmpty()) {
+            throw new Exception("Debe seleccionar compuestos");
         }
     }
 
@@ -271,6 +291,7 @@ public class MedicamentoBean implements Serializable {
 
     public String crearMedicamento() {
         try {
+            verificarCompuestos();
             verificarCantidad();
             verificarUnidad();
             Medicamento m = new Medicamento();
@@ -280,23 +301,32 @@ public class MedicamentoBean implements Serializable {
             m.setNomComercial(medicamento.getNomComercial());
             m.setContenido(medicamento.getContenido());
             m.setUnidadCont(medicamento.getUnidadCont());
-            m.setAccionFarmList(ObtenerAccionesSelec(accionFarmListId));
             m.setViaAdministracionId(viaAdmFacade.find(viaAdmId));
             m.setPresentacionId(presentacionFacade.find(presId));
             m.setUPorCaja(medicamento.getUPorCaja());
             m.setStockDisponible(BigInteger.ZERO);
             m.setStockFisico(BigInteger.ZERO);
-
             m.setMedicamentoCompuestoList(seleccionados);
             this.medicamentoFacade.create(m);
+            m.setAccionFarmList(ObtenerAccionesSelec(accionFarmListId));
+            medicamentoFacade.edit(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));
-            medicamento = new Medicamento();
-            seleccionados = new ArrayList<>();
-            return "index";
+            Limpiar();
+            return "RegistrarMedicamentos?faces-redirect=true";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "PasoDos";
         }
+    }
+
+    private void Limpiar() {
+        medicamento = new Medicamento();
+        seleccionados = new ArrayList<>();
+        nomGId = BigDecimal.ZERO;
+        viaAdmId = BigDecimal.ZERO;
+        presId = BigDecimal.ZERO;
+        labId = BigDecimal.ZERO;
+        accionFarmListId = new ArrayList<>();
     }
 
     public String editarMedicamentoCompuesto() {

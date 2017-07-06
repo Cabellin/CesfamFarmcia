@@ -10,7 +10,7 @@ import pojos.Paciente;
 import pojos.RecetaMedicamento;
 import pojos.Usuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-05T20:46:43")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-06T00:56:57")
 @StaticMetamodel(Receta.class)
 public class Receta_ { 
 

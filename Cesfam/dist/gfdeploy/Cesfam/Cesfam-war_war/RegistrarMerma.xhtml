@@ -32,7 +32,7 @@
 
                         <p:outputLabel for="advanced" value="Medicamento:" />
                         <p:selectOneListbox id="advanced" value="#{mermaBean.medicamento}" filter="true" filterMatchMode="contains" style="width: 300px">
-                            <f:selectItems value="#{mermaBean.medicamentos}" var="m" itemLabel="#{m.nomComercial} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{m.nomGenerico}" itemValue="#{m.codigo}" />
+                            <f:selectItems value="#{mermaBean.medicamentos}" var="m" itemLabel="#{m.nomComercial} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{m.nomGenericoId.descripcion}" itemValue="#{m.codigo}" />
                         </p:selectOneListbox>
 
                         <p:commandButton value="Registrar" update="mensaje" action="#{mermaBean.registrarMerma()}" ajax="false"/>

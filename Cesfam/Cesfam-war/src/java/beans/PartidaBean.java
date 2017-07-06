@@ -58,7 +58,7 @@ public class PartidaBean implements Serializable {
     public PartidaBean() {
         partida = new Partida();               
         seleccionados = new ArrayList<MedicamentoPartida>();
-        medicamentosBd = new ArrayList<Medicamento>();
+        medicamentosBd = new ArrayList<>();
     }
 
     public Partida getPartida() {
@@ -74,11 +74,7 @@ public class PartidaBean implements Serializable {
     }
 
     public List<Medicamento> getMedicamentosBd() {
-        return medicamentosBd;
-    }
-    
-    public String obtenerNombreGenerico(NomGenerico id) {
-        return nomGenFacade.find(id).getDescripcion();
+        return this.medicamentosBd;
     }
 
     public void setMedicamentosBd(List<Medicamento> medicamentosBd) {

@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
     private String nomUsu;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 150)
     @Column(name = "CONTRASENA")
     private String contrasena;
     @JoinColumn(name = "FUNCIONARIO_RUT", referencedColumnName = "RUT")
