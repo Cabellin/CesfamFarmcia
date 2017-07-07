@@ -10,7 +10,7 @@
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
         <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body style="background-image: url('../resources/images/farmacia1.jpg');">
+    <h:body style="background-image: url('../resources/images/farmacia1.jpg');" onload="#{medicamentoBean.medicamentoComienzo()}">
         <center>              
             <ui:include src="includes/menu.xhtml"/> <!-- Para incluir el menu -->
 
@@ -19,7 +19,7 @@
             <h:form id="form">
                 <p:messages id="mensaje" autoUpdate="false"/>
 
-                <p:dataTable id="mantenedor2" var="m" value="#{medicamentoBean.medicamentos}" widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
+                <p:dataTable id="mantenedor2" var="m" value="#{medicamentoBean.medicamentosBd}" widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
                     <f:facet name="header">
                         Mantenedor de Medicamentos
                     </f:facet>
@@ -32,8 +32,8 @@
                     </f:facet>
 
 
-                    <p:ajax event="rowEdit" listener="#{dtEditView.onRowEdit}" update=":form:mensaje" />
-                    <p:ajax event="rowEditCancel" listener="#{dtEditView.onRowCancel}" update=":form:mensaje" />
+                    <p:ajax event="rowEdit" listener="#{medicamentoBean.onRowEdit}" update=":form:mensaje mantenedor2" />
+                    <p:ajax event="rowEditCancel" listener="#{medicamentoBean.onRowCancel}" update=":form:mensaje" />
 
                     <p:column headerText="Código" filterBy="#{m.codigo}" filterMatchMode="contains">
                         <p:cellEditor>
@@ -46,8 +46,8 @@
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.nomGenericoId.descripcion}" /></f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{m.nomGenericoId.descripcion}" style="width:100%">
-                                    <f:selectItems value="#{medicamentoBean.nombresGen}" var="nom" itemLabel="#{nom.descripcion}" itemValue="#{nom.id}" />
+                                <h:selectOneMenu value="#{m.nomGenericoId}" converter="nomGenConverter" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.nombresGen}" var="nom" itemLabel="#{nom.descripcion}" itemValue="#{nom}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
@@ -64,8 +64,8 @@
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.viaAdministracionId.descripcion}" /></f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{m.viaAdministracionId.descripcion}" style="width:100%">
-                                    <f:selectItems value="#{medicamentoBean.viasAdm}" var="via" itemLabel="#{via.descripcion}" itemValue="#{via.id}" />
+                                <h:selectOneMenu value="#{m.viaAdministracionId}" converter="viaAdministracionConverter" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.viasAdm}" var="via" itemLabel="#{via.descripcion}" itemValue="#{via}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
@@ -75,8 +75,8 @@
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.presentacionId.descripcion}" /></f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{m.presentacionId.descripcion}" style="width:100%">
-                                    <f:selectItems value="#{medicamentoBean.presentaciones}" var="pre" itemLabel="#{pre.descripcion}" itemValue="#{pre.id}" />
+                                <h:selectOneMenu value="#{m.presentacionId}" converter="presentacionConverter" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.presentaciones}" var="pre" itemLabel="#{pre.descripcion}" itemValue="#{pre}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>
@@ -111,8 +111,8 @@
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.laboratorioId.descripcion}" /></f:facet>
                             <f:facet name="input">
-                                <h:selectOneMenu value="#{m.laboratorioId.descripcion}" style="width:100%">
-                                    <f:selectItems value="#{medicamentoBean.laboratorios}" var="lab" itemLabel="#{lab.descripcion}" itemValue="#{lab.id}" />
+                                <h:selectOneMenu value="#{m.laboratorioId}" converter="laboratorioConverter" style="width:100%">
+                                    <f:selectItems value="#{medicamentoBean.laboratorios}" var="lab" itemLabel="#{lab.descripcion}" itemValue="#{lab}" />
                                 </h:selectOneMenu>
                             </f:facet>
                         </p:cellEditor>

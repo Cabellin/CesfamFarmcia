@@ -47,12 +47,6 @@
 
                     <p:fieldset id="compuestosDisponiblesField" legend="Compuestos" style="margin-top: 20px; width: 300px;">
                         <p:dataTable id="compuestosDisponibles" var="c" value="#{medicamentoBean.compuestosBd}" filteredValue="#{medicamentoBean.compFiltrados}" paginator="true" rows="6" emptyMessage="No se han encontrado resultados">
-                            <f:facet name="header2">
-                                <p:outputPanel>
-                                    <h:outputText value="Buscador: " /> &nbsp;&nbsp; 
-                                    <p:inputText id="globalFilter" onkeyup="PF('filtro').filter()" style="width:185px" placeholder="Ingrese su búsqueda"/>
-                                </p:outputPanel>
-                            </f:facet>
 
                             <p:column style="width:20px">
                                 <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
@@ -87,7 +81,7 @@
                                 <p:column headerText="Cantidad" >
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{cm.cantidad}" /></f:facet>
-                                        <f:facet name="input"><p:inputText value="#{cm.cantidad}" style="width:96%" required="true" requiredMessage="Debe ingresar cantidad" label="Cantidad" onkeypress="return justNumbers(event);"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{cm.cantidad}" style="width:96%" maxlength="5" onkeypress="return justNumbers(event);"/></f:facet>                                        
                                     </p:cellEditor>
                                 </p:column>
 

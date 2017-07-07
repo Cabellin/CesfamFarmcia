@@ -18,7 +18,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.RowEditEvent;
 import pojos.Medicamento;
 import pojos.MedicamentoPartida;
 import pojos.MedicamentoPartidaPK;
@@ -41,24 +43,31 @@ public class PartidaBean implements Serializable {
 
     @EJB
     private PartidaFacadeLocal partidaFacade;
-    
+
     @EJB
     private MedicamentoFacadeLocal medicamentoFacade;
-    
+
     @EJB
     private ProveedorFacadeLocal proveedorFacade;
-    
+
     @EJB
     private NomGenericoFacadeLocal nomGenFacade;
-    
+
     private Partida partida;
     private List<MedicamentoPartida> seleccionados;
     private List<Medicamento> medicamentosBd;
+    private BigDecimal proveedorId;
 
     public PartidaBean() {
-        partida = new Partida();               
-        seleccionados = new ArrayList<MedicamentoPartida>();
-        medicamentosBd = new ArrayList<>();
+        partida = new Partida();
+    }
+
+    public BigDecimal getProveedorId() {
+        return proveedorId;
+    }
+
+    public void setProveedorId(BigDecimal proveedorId) {
+        this.proveedorId = proveedorId;
     }
 
     public Partida getPartida() {
@@ -80,7 +89,7 @@ public class PartidaBean implements Serializable {
     public void setMedicamentosBd(List<Medicamento> medicamentosBd) {
         this.medicamentosBd = medicamentosBd;
     }
-    
+
     public List<MedicamentoPartida> getSeleccionados() {
         return seleccionados;
     }
@@ -88,8 +97,8 @@ public class PartidaBean implements Serializable {
     public void setSeleccionados(List<MedicamentoPartida> seleccionados) {
         this.seleccionados = seleccionados;
     }
-    
-    private BigInteger obtenerId(){
+
+    private BigInteger obtenerId() {
         BigInteger id;
         String idS;
         Date now = new Date();
@@ -98,43 +107,71 @@ public class PartidaBean implements Serializable {
         id = BigInteger.valueOf(Long.parseLong(idS));
         return id;
     }
-    
+
     public void onDrop(DragDropEvent ddEvent) {
         Medicamento m = ((Medicamento) ddEvent.getData());
         partida.setId(BigDecimal.valueOf(obtenerId().longValue()));
-        MedicamentoPartida mp = new MedicamentoPartida(new MedicamentoPartidaPK(partida.getId().toBigInteger(), m.getCodigo()), BigInteger.ZERO, new Date());
+        MedicamentoPartida mp = new MedicamentoPartida(new MedicamentoPartidaPK(partida.getId().toBigInteger(), m.getCodigo()), BigInteger.ZERO, null);
         mp.setMedicamento(m);
-        
+
         seleccionados.add(mp);
         medicamentosBd.remove(m);
     }
-    
+
+   
+
     public void quitarMedicamento(MedicamentoPartida mp) {
         medicamentosBd.add(mp.getMedicamento());
         seleccionados.remove(mp);
     }
-    
-    public String partida(){
-        medicamentosBd = medicamentoFacade.findAll();        
-        seleccionados = new ArrayList<MedicamentoPartida>();
+
+    public String partidaComienzo() {
+        if (medicamentosBd == null || seleccionados == null) {
+            medicamentosBd = medicamentoFacade.findAll();
+            seleccionados = new ArrayList<MedicamentoPartida>();
+        }
         return "partida";
     }
-    
-    private void aumentarStock(){
-        for(MedicamentoPartida mp : seleccionados){
+
+    private void aumentarStock() {
+        for (MedicamentoPartida mp : seleccionados) {
             Medicamento m = medicamentoFacade.find(mp.getMedicamento().getCodigo());
             m.setStockFisico(m.getStockFisico().add(mp.getCantidad()));
             m.setStockDisponible(m.getStockDisponible().add(mp.getCantidad()));
             medicamentoFacade.edit(m);
         }
     }
-    
+
+    private void validarCantidad() throws Exception {
+        for (MedicamentoPartida mp : seleccionados) {
+            if (mp.getCantidad().intValue() == 0 || mp.getCantidad() == null) {
+                throw new Exception("Verificar cantidad en medicamentos");
+            }
+        }
+    }
+
+    private void validarFechaVenc() throws Exception {
+        for (MedicamentoPartida mp : seleccionados) {
+            if (mp.getFechaVencimiento() == null) {
+                throw new Exception("Verificar fecha de vencimiento en medicamentos");
+            }
+        }
+    }
+
+    public void verificarMedicamentos() throws Exception {
+        if (seleccionados.isEmpty()) {
+            throw new Exception("Debe seleccionar medicamentos");
+        }
+    }
+
     public String crearPartida() {
         try {
+            validarCantidad();
+            validarFechaVenc();
             Partida p = new Partida();
             p.setId(partida.getId());
             p.setFechaEntrega(new Date());
-            p.setProveedorId(proveedorFacade.find(p.getProveedorId()));
+            p.setProveedorId(proveedorFacade.find(proveedorId));
             p.setMedicamentoPartidaList(seleccionados);
             this.partidaFacade.create(p);
             aumentarStock();
@@ -142,9 +179,9 @@ public class PartidaBean implements Serializable {
             seleccionados = new ArrayList<MedicamentoPartida>();
             medicamentosBd = new ArrayList<Medicamento>();
             partida = new Partida();
-            return "index";            
+            return "index";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Debe editar los datos de los compuestos", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "partida";
         }
 

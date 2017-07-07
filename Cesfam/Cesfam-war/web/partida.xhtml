@@ -10,22 +10,22 @@
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
         <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body onload="#{partidaBean.partida()}" style="background-image: url('../resources/images/farmacia1.jpg');">
+    <h:body onload="#{partidaBean.partidaComienzo()}" style="background-image: url('../resources/images/farmacia1.jpg');">
 
 
         <ui:include src="includes/menu.xhtml"/>
         <br/><br/>
         <center>            
             <p:panel id="Registrar" header="REGISTRO PARTIDA" style="margin-top: 20px ;max-height: min-content; width: 1000px;">
-                <h:form>
-                    <p:selectOneMenu id="proveedores" value="#{partidaBean.partida.proveedorId}" style="width:150px" required="true" requiredMessage="Debe escoger un proveedor">
-                        <f:selectItem itemLabel="Seleccione Proveedor" itemValue="" noSelectionOption="true" />
-                        <f:selectItems value="#{partidaBean.proveedores}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p.id}" />
-                    </p:selectOneMenu>
-                </h:form>
+
                 <h:form id="form">
                     <p:messages id="mensaje" showDetail="false" autoUpdate="false"/>
                     <br/><br/>
+
+                    <p:selectOneMenu id="proveedores" value="#{partidaBean.proveedorId}" style="width:150px" required="true" requiredMessage="Debe escoger un proveedor">
+                        <f:selectItem itemLabel="Seleccione Proveedor" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{partidaBean.proveedores}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p.id}" />
+                    </p:selectOneMenu>                    
 
                     <p:fieldset id="medicamentosDisponiblesField" legend="Medicamentos" style="margin-top:20px; max-width: 800px">
                         <p:dataTable id="medicamentosDisponibles" var="m" value="#{partidaBean.medicamentosBd}" paginator="true" rows="7" emptyMessage="No se han encontrado resultados">
@@ -49,8 +49,6 @@
                             <h:outputText value="!!!Suelte aquí los medicamentos!!!" rendered="#{empty partidaBean.seleccionados}" style="font-size:24px;" />
                             <p:dataTable id="MedSeleccionadosTable" var="mp" value="#{partidaBean.seleccionados}" editable="true" editMode="cell" widgetVar="cellMp" rendered="#{not empty partidaBean.seleccionados}">
 
-                                <p:ajax event="cellEdit" />
-
                                 <p:column style="width:34px">
                                     <p:commandButton id="eliminar" action='#{partidaBean.quitarMedicamento(mp)}' update=":form" icon="ui-icon-closethick" />
                                     <p:tooltip for="eliminar" value="Quitar" position="right"/>
@@ -69,10 +67,17 @@
                                     </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="Fecha de Vencimiento" >
-                                    <p:calendar id="mask" value="#{mp.fechaVencimiento}" pattern="dd-MM-yyyy" mask="true" style="width: 200px" label="Fecha de Vencimiento"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{mp.fechaVencimiento}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+                                        <f:facet name="input"><p:calendar id="mask" value="#{mp.fechaVencimiento}" pattern="dd-MM-yyyy" mask="true" style="width: 200px" mindate="1" label="Fecha de Vencimiento"/></f:facet>
+                                    </p:cellEditor>
                                 </p:column>
 
                             </p:dataTable>
+                            <p:contextMenu for="MedSeleccionadosTable" widgetVar="cMenu">   
+                                <p:menuitem value="Editar Celda" icon="ui-icon-search" onclick="PF('cellMp').showCellEditor();return false;"/>  
+                                <p:menuitem value="Ocultar Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                            </p:contextMenu> 
                         </p:outputPanel>
                     </p:fieldset>
 

@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.RowEditEvent;
 import pojos.AccionFarm;
 import pojos.Compuesto;
 import pojos.Laboratorio;
@@ -75,6 +76,15 @@ public class MedicamentoBean implements Serializable {
     private BigDecimal labId;
     private List<String> accionFarmListId;
     private List<Compuesto> compFiltrados;
+    private List<Medicamento> medicamentosBd;
+
+    public List<Medicamento> getMedicamentosBd() {
+        return medicamentosBd;
+    }
+
+    public void setMedicamentosBd(List<Medicamento> medicamentosBd) {
+        this.medicamentosBd = medicamentosBd;
+    }
 
     public List<Compuesto> getCompFiltrados() {
         return compFiltrados;
@@ -86,6 +96,10 @@ public class MedicamentoBean implements Serializable {
 
     public List<Medicamento> getFiltrados() {
         return filtrados;
+    }
+
+    public void setFiltrados(List<Medicamento> filtrados) {
+        this.filtrados = filtrados;
     }
 
     public List<String> getAccionFarmListId() {
@@ -126,10 +140,6 @@ public class MedicamentoBean implements Serializable {
 
     public void setNomGId(BigDecimal nomGId) {
         this.nomGId = nomGId;
-    }
-
-    public void setFiltrados(List<Medicamento> filtrados) {
-        this.filtrados = filtrados;
     }
 
     public Medicamento getMedicamento() {
@@ -178,10 +188,6 @@ public class MedicamentoBean implements Serializable {
         compuestosBd = new ArrayList<Compuesto>();
     }
 
-    public List<Medicamento> getMedicamentos() {
-        return medicamentoFacade.findAll();
-    }
-
     private List<AccionFarm> ObtenerAccionesSelec(List<String> accionesId) {
         List<AccionFarm> accionesSelec = new ArrayList<>();
         AccionFarm ac = new AccionFarm();
@@ -225,6 +231,28 @@ public class MedicamentoBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Celda Actualizada", "Antes: " + oldValue + ", Ahora:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        try {
+            Medicamento med = new Medicamento();
+            for (Medicamento temp : medicamentosBd) {
+                if (temp.getCodigo().equals(((Medicamento) event.getObject()).getCodigo())) {
+                    med = temp;
+                }
+            }
+            medicamentoFacade.edit(med);        
+            FacesMessage msg = new FacesMessage("Medicamento Editado: " + ((Medicamento) event.getObject()).getCodigo(), "");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage("Error: " + e.getMessage(), "");
+        }
+        medicamentosBd = medicamentoFacade.findAll();
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edición cancelada", "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
 //    public String pasoDos() {
@@ -282,10 +310,12 @@ public class MedicamentoBean implements Serializable {
 
         seleccionados.add(cm);
         compuestosBd.remove(c);
+        compFiltrados.remove(c);
     }
 
     public void quitarCompuesto(MedicamentoCompuesto mc) {
         compuestosBd.add(mc.getCompuesto());
+        compFiltrados.add(mc.getCompuesto());
         seleccionados.remove(mc);
     }
 
@@ -312,7 +342,7 @@ public class MedicamentoBean implements Serializable {
             medicamentoFacade.edit(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));
             Limpiar();
-            return "RegistrarMedicamentos?faces-redirect=true";
+            return "partida?faces-redirect=true";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "PasoDos";
@@ -341,6 +371,10 @@ public class MedicamentoBean implements Serializable {
         return "Mantenedor";
     }
 
+    public String medicamentoComienzo() {
+        medicamentosBd = medicamentoFacade.findAll();
+        return "Mantenedor";
+    }
 //    public String actualizarMedicamento() {
 //        Medicamento m = medicamentoFacade.find(medicamento.getCodigo());
 //        m.setCodigo(medicamento.getCodigo());

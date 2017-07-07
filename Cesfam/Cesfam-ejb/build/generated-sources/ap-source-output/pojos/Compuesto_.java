@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import pojos.MedicamentoCompuesto;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-06T00:56:56")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-07T03:55:54")
 @StaticMetamodel(Compuesto.class)
 public class Compuesto_ { 
 
