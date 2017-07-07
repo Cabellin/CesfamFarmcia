@@ -10,7 +10,7 @@
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
         <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body onload="#{partidaBean.partida()}" style="background-image: url('../resources/images/farmacia1.jpg');">
+    <h:body onload="#{partidaBean.partidaComienzo()}" style="background-image: url('../resources/images/farmacia1.jpg');">
 
         <ui:include src="includes/menu.xhtml"/> <!-- Para incluir el menu -->
         <br/><br/>
@@ -18,7 +18,7 @@
             <h:form id="form">
 
                 <p:messages id="mensaje" showDetail="false" autoUpdate="false"/>
-                <p:panel id="Registrar" header="Entregar Medicamentos" style="margin-top: 20px ;height:700px; width: 900px;">
+                <p:panel id="Registrar" header="ENTREGAR MEDICAMENTOS" style="margin-top: 20px ;height:700px; width: 900px;">
 
                     <br/><br/>
 
@@ -38,7 +38,7 @@
                             </p:column>
 
                             <p:column headerText="Nombre Genérico">
-                                <h:outputText value="#{m.nomGenerico}" />
+                                <h:outputText value="#{m.nomGenericoId.descripcion}" />
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>
@@ -50,16 +50,13 @@
 
                                 <p:ajax event="cellEdit" />
                                 
-                                <p:column style="width:34px">
-                                    <p:commandButton id="eliminar" action='#{recetaBean.quitarMedicamento(rm)}' update=":form" icon="ui-icon-closethick" />
-                                    <p:tooltip for="eliminar" value="Quitar" position="right"/>
-                                </p:column>
+                                
 
                                 <p:column headerText="Nombre Comercial">
                                     <h:outputText value="#{rm.medicamento.nomComercial}" />
                                 </p:column>
                                 <p:column headerText="Nombre Genérico">
-                                    <h:outputText value="#{rm.medicamento.nomGenerico}" />
+                                    <h:outputText value="#{rm.medicamento.nomGenericoId.descripcion}" />
                                 </p:column>
                                 <p:column headerText="Cantidad">
                                     <p:cellEditor>

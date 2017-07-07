@@ -142,7 +142,7 @@ public class RecetaBean implements Serializable {
         return id;
     }
     
-//    public void onDrop(DragDropEvent ddEvent) {
+    public void onDrop(DragDropEvent ddEvent) {
 //        Medicamento m = ((Medicamento) ddEvent.getData());
 //        receta.setId(BigDecimal.valueOf(obtenerId().longValue()));
 //        RecetaMedicamento rm = new RecetaMedicamento(new RecetaMedicamentoPK(medicamento, receta.getId().toBigInteger()), BigInteger.ZERO);
@@ -150,7 +150,7 @@ public class RecetaBean implements Serializable {
 //        
 //        seleccionados.add(rm);
 //        medicamentosBd.remove(m);
-//    }
+    }
     
     private void descontarStock() throws Exception {
         Medicamento m = medicamentoFacade.find(medicamento);

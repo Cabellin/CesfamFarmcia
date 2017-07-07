@@ -15,8 +15,8 @@
         <center>
             <br/><br/>
             <h:form id="form">
-                <p:messages id="mensaje" autoUpdate="false"/>
-                <p:panel id="Registrar" header="REGISTRO" style="margin-top: 20px ;height:800px; width: 800px;">
+                <p:panel id="Registrar" header="REGISTRO MEDICAMENTO" style="margin-top: 20px ;max-height: min-content; width: 800px;">
+                    <p:messages id="mensaje" autoUpdate="false"/>
                     <h:panelGrid columns="3" cellpadding="8">
                         <h:outputText value="Código" />
                         <p:inputText value="#{medicamentoBean.medicamento.codigo}" required="true" onkeypress="return justNumbers(event);" requiredMessage="Debe ingresar un código identificador" maxlength="20"/>
@@ -70,6 +70,9 @@
                         <h:outputText/>
                         <p:commandButton value="Siguiente" update="mensaje" action="#{medicamentoBean.pasoDos()}" ajax="false"/>
 
+                        <h:outputText/><h:outputText/><h:outputText/>
+                        <h:outputText/><h:outputText/><h:outputText/>
+                        
                     </h:panelGrid>
                 </p:panel>
 

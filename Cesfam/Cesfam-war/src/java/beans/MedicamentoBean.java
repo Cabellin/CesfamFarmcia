@@ -277,6 +277,10 @@ public class MedicamentoBean implements Serializable {
         return "RegistrarMedicamentos";
     }
 
+    public String volverMantenedor() {
+        return "Mantenedor";
+    }
+    
     public String volverPartida() {
         medicamento = new Medicamento();
         return "partida";
@@ -342,7 +346,7 @@ public class MedicamentoBean implements Serializable {
             medicamentoFacade.edit(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento Agregado exitosamente!!!"));
             Limpiar();
-            return "partida?faces-redirect=true";
+            return "RegistrarMedicamentos";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "PasoDos";
@@ -375,19 +379,20 @@ public class MedicamentoBean implements Serializable {
         medicamentosBd = medicamentoFacade.findAll();
         return "Mantenedor";
     }
-//    public String actualizarMedicamento() {
-//        Medicamento m = medicamentoFacade.find(medicamento.getCodigo());
-//        m.setCodigo(medicamento.getCodigo());
-//        m.setNomGenericoId(nomGenFacade.find(nomGen.getId()));
-//        m.setNomComercial(medicamento.getNomComercial());
-//        m.setViaAdministracionId(viaAdmFacade.find(viaAdm.getId()));
-//        m.setPresentacionId(presentacionFacade.find(presentacion.getId()));
-//        m.setContenido(medicamento.getContenido());
-//        m.setUPorCaja(medicamento.getUPorCaja());
-//        m.setStockDisponible(medicamento.getStockDisponible());
-//        m.setStockFisico(medicamento.getStockFisico());
-//        medicamentoFacade.edit(m);
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento actualizada!!!"));
-//        return "Mantenedor";
-//    }
+    public String actualizarMedicamento2() {
+        try {
+            verificarCompuestos();
+            verificarCantidad();
+            verificarUnidad();
+            Medicamento m = medicamentoFacade.find(medicamento.getCodigo());
+            m.setMedicamentoCompuestoList(seleccionados);
+            m.setAccionFarmList(ObtenerAccionesSelec(accionFarmListId));
+            medicamentoFacade.edit(m);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento editado exitosamente!!!"));
+            return "Mantenedor?faces-redirect=true";
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
+            return "cambiarCompuesto";
+        }
+    }
 }

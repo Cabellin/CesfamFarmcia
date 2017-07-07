@@ -21,7 +21,7 @@
 
                 <p:dataTable id="mantenedor2" var="m" value="#{medicamentoBean.medicamentosBd}" widgetVar="filtro" paginator="true" rows="10" editable="true"  emptyMessage="No se encuentran medicamentos en la Base de Datos" filteredValue="#{medicamentoBean.filtrados}" style="margin-bottom:20px">
                     <f:facet name="header">
-                        Mantenedor de Medicamentos
+                        MANTENEDOR DE MEDICAMENTOS
                     </f:facet>
 
                     <f:facet name="header2">
@@ -56,7 +56,7 @@
                     <p:column headerText="Nombre Comercial">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.nomComercial}" /></f:facet>
-                            <f:facet name="input"><p:inputText value="#{m.nomComercial}" style="width:100%"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{m.nomComercial}" maxlength="40" required="true" requiredMessage="Debe ingresar el nombre comercial del medicamento" onkeypress="return letras(event);" style="width:100%"/></f:facet>
                         </p:cellEditor>
                     </p:column>
                     
@@ -85,14 +85,14 @@
                     <p:column headerText="Unidad por caja">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.UPorCaja}" /></f:facet>
-                            <f:facet name="input"><p:inputNumber value="#{m.UPorCaja}" minValue="1" decimalSeparator="none" thousandSeparator="." required="true" requiredMessage="Debe ingresar unidades por cada caja del medicamento" style="width:100%"/></f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{m.UPorCaja}" minValue="1"  maxValue="500" decimalSeparator="none" thousandSeparator="." required="true" requiredMessage="Debe ingresar unidades por cada caja del medicamento" onkeypress="return justNumbers(event);" style="width:100%"/></f:facet>
                         </p:cellEditor>
                     </p:column>
                     
                     <p:column headerText="Contenido">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{m.contenido}" /></f:facet>
-                            <f:facet name="input"><p:inputNumber value="#{m.contenido}" minValue="1" thousandSeparator="." decimalSeparator="none" required="true" requiredMessage="Debe ingresar contenido" onkeypress="return justNumbers(event);" style="width:100%"/></f:facet>
+                            <f:facet name="input"><p:inputNumber value="#{m.contenido}" minValue="1"  maxValue="9000" thousandSeparator="." decimalSeparator="none" required="true" requiredMessage="Debe ingresar contenido" onkeypress="return justNumbers(event);" style="width:100%"/></f:facet>
                         </p:cellEditor>
                     </p:column>
                     
@@ -139,7 +139,7 @@
                     
                     <p:column style="width:34px">
                         <p:commandButton id="editarCompuestos" action="#{medicamentoBean.editarMedicamentoCompuesto()}" icon="ui-icon-plus"/>
-                        <p:tooltip for="editarCompuestos" value="Modificar compuesto" position="left"/>
+                        <p:tooltip for="editarCompuestos" value="Otras modificaciones" position="left"/>
                     </p:column>
                     
                 </p:dataTable>
