@@ -31,6 +31,7 @@ import pojos.ViaAdministracion;
 import services.AccionFarmFacadeLocal;
 import services.CompuestoFacadeLocal;
 import services.LaboratorioFacadeLocal;
+import services.MedicamentoCompuestoFacadeLocal;
 import services.MedicamentoFacadeLocal;
 import services.NomGenericoFacadeLocal;
 import services.PresentacionFacadeLocal;
@@ -65,6 +66,9 @@ public class MedicamentoBean implements Serializable {
 
     @EJB
     private PresentacionFacadeLocal presentacionFacade;
+    
+    @EJB
+    private MedicamentoCompuestoFacadeLocal medCompFacade;
 
     private List<MedicamentoCompuesto> seleccionados;
     private Medicamento medicamento;
@@ -389,16 +393,29 @@ public class MedicamentoBean implements Serializable {
         medicamentosBd = medicamentoFacade.findAll();
         return "Mantenedor";
     }
+    
     public String actualizarMedicamento() {
         try {
             verificarCompuestos();
             verificarCantidad();
             verificarUnidad();
-            Medicamento m = medicamentoFacade.find(medicamento.getCodigo());
-            m.setMedicamentoCompuestoList(seleccionados);
-            m.setAccionFarmList(ObtenerAccionesSelec(accionFarmListId));
+            Medicamento m = medicamentoFacade.find(medicamento.getCodigo());            
+            for (AccionFarm temp : m.getAccionFarmList()) {
+                temp.getMedicamentoList().remove(m);
+                accionFarmFacade.edit(temp);
+            }
+            for (AccionFarm temp : medicamento.getAccionFarmList()) {
+                temp.getMedicamentoList().add(m);
+                accionFarmFacade.edit(temp);
+            }
+            for (MedicamentoCompuesto temp : m.getMedicamentoCompuestoList()) {
+                medCompFacade.remove(temp);
+            }
+            m.getMedicamentoCompuestoList().addAll(seleccionados);
             medicamentoFacade.edit(m);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Medicamento editado exitosamente!!!"));
+            medicamentosBd = medicamentoFacade.findAll();
+            Limpiar();
             return "Mantenedor?faces-redirect=true";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));

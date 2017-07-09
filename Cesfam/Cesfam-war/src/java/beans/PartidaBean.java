@@ -27,10 +27,12 @@ import pojos.MedicamentoPartidaPK;
 import pojos.NomGenerico;
 import pojos.Partida;
 import pojos.Proveedor;
+import pojos.Receta;
 import services.MedicamentoFacadeLocal;
 import services.NomGenericoFacadeLocal;
 import services.PartidaFacadeLocal;
 import services.ProveedorFacadeLocal;
+import services.RecetaFacadeLocal;
 
 /**
  *
@@ -52,6 +54,9 @@ public class PartidaBean implements Serializable {
 
     @EJB
     private NomGenericoFacadeLocal nomGenFacade;
+    
+    @EJB
+    private RecetaFacadeLocal recetaFacade;
 
     private Partida partida;
     private List<MedicamentoPartida> seleccionados;
@@ -118,8 +123,6 @@ public class PartidaBean implements Serializable {
         medicamentosBd.remove(m);
     }
 
-   
-
     public void quitarMedicamento(MedicamentoPartida mp) {
         medicamentosBd.add(mp.getMedicamento());
         seleccionados.remove(mp);
@@ -164,6 +167,17 @@ public class PartidaBean implements Serializable {
         }
     }
 
+    private void notificarPendientes() {
+        List<Receta> recetas = recetaFacade.findAll();
+        List<Receta> recetasPendientes = new ArrayList<>();
+        for (Receta temp : recetas) {
+            if (temp.getEstado().equals("Pendiente")) {
+                recetasPendientes.add(temp);
+            }
+        }
+        // falta
+    }
+
     public String crearPartida() {
         try {
             validarCantidad();
@@ -184,6 +198,5 @@ public class PartidaBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "partida";
         }
-
     }
 }
