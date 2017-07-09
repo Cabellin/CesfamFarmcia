@@ -315,12 +315,16 @@ public class MedicamentoBean implements Serializable {
 
         seleccionados.add(cm);
         compuestosBd.remove(c);
-        compFiltrados.remove(c);
+        if (compFiltrados != null && compFiltrados.contains(c)) {
+            compFiltrados.remove(c);
+        }        
     }
 
     public void quitarCompuesto(MedicamentoCompuesto mc) {
         compuestosBd.add(mc.getCompuesto());
-        compFiltrados.add(mc.getCompuesto());
+        if (compFiltrados != null) {
+            compFiltrados.add(mc.getCompuesto());
+        }        
         seleccionados.remove(mc);
     }
 
@@ -364,8 +368,14 @@ public class MedicamentoBean implements Serializable {
         accionFarmListId = new ArrayList<>();
     }
 
-    public String editarMedicamentoCompuesto() {
-//        seleccionados = mc;
+    public String editarMedicamentoDatos(Medicamento medicamento) {
+        this.medicamento = medicamentoFacade.find(medicamento.getCodigo());
+        this.seleccionados = this.medicamento.getMedicamentoCompuestoList();
+        compFiltrados = null;
+        this.compuestosBd = compuestoFacade.findAll();
+        for (MedicamentoCompuesto temp : seleccionados) {
+            compuestosBd.remove(temp.getCompuesto());
+        }
         return "cambiarCompuestos?faces-redirect=true";
     }
 
@@ -380,7 +390,7 @@ public class MedicamentoBean implements Serializable {
         medicamentosBd = medicamentoFacade.findAll();
         return "Mantenedor";
     }
-    public String actualizarMedicamento2() {
+    public String actualizarMedicamento() {
         try {
             verificarCompuestos();
             verificarCantidad();

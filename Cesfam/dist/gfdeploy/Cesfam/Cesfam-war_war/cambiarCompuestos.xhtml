@@ -26,8 +26,8 @@
                         <h:outputText />
 
                         <p:outputLabel for="acF" value="Acción Farmacológica" />
-                        <p:selectManyMenu id="acF" value="#{medicamentoBean.accionFarmListId}" scrollHeight="75" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 240px">
-                            <f:selectItems value="#{medicamentoBean.acciones}" var="a" itemLabel="#{a.descripcion}" itemValue="#{a.id}" />
+                        <p:selectManyMenu id="acF" value="#{medicamentoBean.medicamento.accionFarmList}" converter="accionFarmConverter" scrollHeight="75" filter="true" filterMatchMode="contains" showCheckbox="true" style="width: 240px">
+                            <f:selectItems value="#{medicamentoBean.acciones}" var="a" itemLabel="#{a.descripcion}" itemValue="#{a}" />
                         </p:selectManyMenu>
                     </h:panelGrid>                   
 
@@ -107,7 +107,7 @@
 
 
                     <p:link outcome="#{medicamentoBean.volverMantenedor()}" value="Volver a Mantenedor"></p:link>  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-                    <p:commandButton value="Modificar" update="mensaje" action="#{medicamentoBean.actualizarMedicamento2()}" ajax="false"/>
+                    <p:commandButton value="Modificar" update="mensaje" action="#{medicamentoBean.actualizarMedicamento()}" ajax="false"/>
                     <br/><br/><br/>
                 </p:panel>
 
