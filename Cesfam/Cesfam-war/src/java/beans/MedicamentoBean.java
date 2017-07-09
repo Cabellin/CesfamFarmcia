@@ -261,6 +261,7 @@ public class MedicamentoBean implements Serializable {
 //        seleccionados = new ArrayList<MedicamentoCompuesto>();
 //        return "PasoDos";
 //    }
+    
     public String pasoDos() {
         Medicamento m = medicamentoFacade.find(medicamento.getCodigo());
         if (m == null) {
