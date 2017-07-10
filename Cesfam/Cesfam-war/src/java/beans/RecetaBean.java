@@ -37,6 +37,7 @@ import services.RecetaMedicamentoFacadeLocal;
 @ManagedBean
 @SessionScoped
 public class RecetaBean implements Serializable {
+
     @EJB
     private RecetaMedicamentoFacadeLocal recetaMedicamentoFacade;
 
@@ -52,25 +53,23 @@ public class RecetaBean implements Serializable {
     private Receta receta;
     private Paciente paciente;
     private String medicamento;
-    private RecetaMedicamento recmed;
-    private List<RecetaMedicamento> recList;
     private List<Medicamento> medicamentosBd;
+    private List<RecetaMedicamento> recetaMedList;
     private List<Receta> recetas;
     private List<Receta> filtro;
 
-    
     public RecetaBean() {
         paciente = new Paciente();
         receta = new Receta();
         medicamentosBd = new ArrayList<Medicamento>();
     }
 
-    public RecetaMedicamento getRecmed() {
-        return recmed;
+    public List<RecetaMedicamento> getRecetaMedList() {
+        return recetaMedList;
     }
 
-    public void setRecmed(RecetaMedicamento recmed) {
-        this.recmed = recmed;
+    public void setRecetaMedList(List<RecetaMedicamento> recetaMedList) {
+        this.recetaMedList = recetaMedList;
     }
 
     public List<Receta> getFiltro() {
@@ -80,21 +79,13 @@ public class RecetaBean implements Serializable {
     public void setFiltro(List<Receta> filtro) {
         this.filtro = filtro;
     }
-    
+
     public String getMedicamento() {
         return medicamento;
     }
 
     public void setMedicamento(String medicamento) {
         this.medicamento = medicamento;
-    }
-
-    public List<RecetaMedicamento> getRecList() {
-        return recList;
-    }
-
-    public void setRecList(List<RecetaMedicamento> recList) {
-        this.recList = recList;
     }
 
     public Paciente getPaciente() {
@@ -104,7 +95,7 @@ public class RecetaBean implements Serializable {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
-    
+
     public Receta getReceta() {
         return receta;
     }
@@ -114,13 +105,14 @@ public class RecetaBean implements Serializable {
     }
 
     public List<Receta> getRecetas() {
-        return recetaFacade.findAll();
+        obtenerRecetasPendientes();
+        return this.recetas;
     }
 
     public void setRecetas(List<Receta> recetas) {
         this.recetas = recetas;
-    } 
-    
+    }
+
     public List<Medicamento> getMedicamentosBd() {
         return medicamentosBd;
     }
@@ -128,64 +120,117 @@ public class RecetaBean implements Serializable {
     public void setMedicamentosBd(List<Medicamento> medicamentosBd) {
         this.medicamentosBd = medicamentosBd;
     }
-    
-    public String verificarRut(){
-        Paciente p = pacienteFacade.find(paciente.getRut());
-        if (p != null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El paciente ha sido encontrado!!"));
-            return "EntregarMedicamentos";
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"El paciente no ha sido encontrado   qqqqq, vuelva a intentarlo",""));
-            return "EntregarMedicamentos";
-        }
+
+    public List<String> getEstadosMedicamento() {
+        List<String> estados = new ArrayList<>();
+        estados.add("Entregado");
+        estados.add("Reservado");
+        estados.add("No aplica");
+        estados.add("Permanente");
+        return estados;
     }
-    
-    private BigInteger obtenerId(){
-        BigInteger id;
-        String idS;
-        Date now = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyyMMddHHmmss");
-        idS = ft.format(now);
-        id = BigInteger.valueOf(Long.parseLong(idS));
-        return id;
-    }
-    
-    public void onDrop(DragDropEvent ddEvent) {
-//        Medicamento m = ((Medicamento) ddEvent.getData());
-//        receta.setId(BigDecimal.valueOf(obtenerId().longValue()));
-//        RecetaMedicamento rm = new RecetaMedicamento(new RecetaMedicamentoPK(medicamento, receta.getId().toBigInteger()), BigInteger.ZERO);
-//        rm.setMedicamento(m);
-//        
-//        seleccionados.add(rm);
-//        medicamentosBd.remove(m);
-    }
-    
+
     private void descontarStock() throws Exception {
-        Medicamento m = medicamentoFacade.find(medicamento);
-        int com = recmed.getCantTotal().compareTo(m.getStockFisico());
-        if (com == -1 || com == 0) {
-            m.setStockDisponible(m.getStockDisponible().subtract(recmed.getCantTotal()));
-            medicamentoFacade.edit(m);
-        }else{
-            throw new Exception("No puede descontar número mayor al Stock Fisico actual");
+        for (RecetaMedicamento recmed : receta.getRecetaMedicamentoList()) {
+            Medicamento m = recmed.getMedicamento();
+            int com = recmed.getCantTotal().compareTo(m.getStockFisico());
+            if (recmed.getEstado().equals("Entregado")) {
+                if (com == -1 || com == 0) {
+                    m.setStockDisponible(m.getStockDisponible().subtract(recmed.getCantTotal()));
+                    medicamentoFacade.edit(m);
+                } else {
+                    throw new Exception("No puede descontar número mayor al Stock Fisico actual");
+                }
+            }
         }
     }
-    
-    public String entregarMedicamentos(){
-        return " ";
-    }
-    
-    public String verMedicamentosReceta(Receta r){
+
+    public String verMedicamentosReceta(Receta r) {
         receta = r;
-        recList = receta.getRecetaMedicamentoList();
-        return "verMedicamentos?faces-redirect=true"; 
+        recetaMedList = receta.getRecetaMedicamentoList();
+        return "verMedicamentos?faces-redirect=true";
     }
-    
-    public String cancelar(){
+
+    public String cancelar() {
         return "recetas?faces-redirect=true";
     }
+
+    public String entregarTodos() {
+        for (RecetaMedicamento temp : recetaMedList) {
+            temp.setEstado("Entregado");
+        }
+        return "verMedicamentos";
+    }
+
+    private void obtenerRecetasPendientes(){
+        recetas = new ArrayList<>();
+        List<Receta> todasRecetas = recetaFacade.findAll();
+        for (Receta temp : todasRecetas) {
+            if (temp.getEstado().equals("Pendiente")) {
+                recetas.add(temp);
+            }            
+        }
+    }
     
-    public String entregarMedicamento(){
-        return "";
+    private void verificarPendientes() throws Exception {
+        for (RecetaMedicamento temp : recetaMedList) {
+            if (temp.getEstado().equals("Pendiente")) {
+                throw new Exception("Tiene medicamentos pendientes");
+            }
+        }
+    }
+
+    public String confirmarSi() {
+        for (RecetaMedicamento temp : recetaMedList) {
+            if (temp.getEstado().equals("Entregado") && temp.getCantTotal().longValue() > temp.getMedicamento().getStockDisponible().longValue()) {
+                temp.setEstado("Reservado");
+            }
+        }
+        return "verMedicamentos";
+    }
+
+    public String confirmarNo() {
+        return "verMedicamentos";
+    }
+
+    private void cambiarEstadoReceta() {
+        OUTER:
+        for (RecetaMedicamento temp : recetaMedList) {
+            switch (temp.getEstado()) {
+                case "Reservado":
+                    receta.setEstado("Reservado");
+                    return;
+                case "Permanente":
+                    receta.setEstado("Permanente");
+                    return;
+                default:
+                    receta.setEstado("Listo");
+                    break;
+            }
+        }
+    }
+
+    public void verificarStock() throws Exception {
+        for (RecetaMedicamento temp : recetaMedList) {
+            if (temp.getEstado().equals("Entregado") && temp.getCantTotal().longValue() > temp.getMedicamento().getStockDisponible().longValue()) {
+                throw new Exception("Tiene medicamentos sin stock suficiente, puede reservar");
+            }
+        }
+    }
+
+    public String confirmarReceta() {
+        try {
+            verificarPendientes();
+            verificarStock();
+            cambiarEstadoReceta();
+            receta.setRecetaMedicamentoList(recetaMedList);
+            recetaFacade.edit(receta);
+            descontarStock();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Receta confirmada exitosamente!!!"));
+            return "recetas?faces-redirect=true";
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
+            return "verMedicamentos";
+        }
     }
 }

@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RecetaMedicamento.findByUnidadP", query = "SELECT r FROM RecetaMedicamento r WHERE r.unidadP = :unidadP"),
     @NamedQuery(name = "RecetaMedicamento.findByExtension", query = "SELECT r FROM RecetaMedicamento r WHERE r.extension = :extension"),
     @NamedQuery(name = "RecetaMedicamento.findByUnidadE", query = "SELECT r FROM RecetaMedicamento r WHERE r.unidadE = :unidadE"),
-    @NamedQuery(name = "RecetaMedicamento.findByCantTotal", query = "SELECT r FROM RecetaMedicamento r WHERE r.cantTotal = :cantTotal")})
+    @NamedQuery(name = "RecetaMedicamento.findByCantTotal", query = "SELECT r FROM RecetaMedicamento r WHERE r.cantTotal = :cantTotal"),
+    @NamedQuery(name = "RecetaMedicamento.findByEstado", query = "SELECT r FROM RecetaMedicamento r WHERE r.estado = :estado")})
 public class RecetaMedicamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,6 +75,9 @@ public class RecetaMedicamento implements Serializable {
     @NotNull
     @Column(name = "CANT_TOTAL")
     private BigInteger cantTotal;
+    @Size(max = 20)
+    @Column(name = "ESTADO")
+    private String estado;
     @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicamento medicamento;
@@ -165,6 +169,14 @@ public class RecetaMedicamento implements Serializable {
 
     public void setCantTotal(BigInteger cantTotal) {
         this.cantTotal = cantTotal;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Medicamento getMedicamento() {
