@@ -390,9 +390,8 @@ public class MedicamentoBean implements Serializable {
         return "Mantenedor";
     }
 
-    public String medicamentoComienzo() {
+    public void medicamentoComienzo() {
         medicamentosBd = medicamentoFacade.findAll();
-        return "Mantenedor";
     }
     
     public String actualizarMedicamento() {

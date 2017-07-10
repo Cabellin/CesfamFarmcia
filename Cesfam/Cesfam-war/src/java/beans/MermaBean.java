@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,13 +56,13 @@ public class MermaBean implements Serializable {
 
     public List<RegistroMerma> getMermaPendientes() {
         List<RegistroMerma> mermas = mermaFacade.findAll();
-        List<RegistroMerma> pendientes = new ArrayList<RegistroMerma>();
+        mermaPendientes = new ArrayList<RegistroMerma>();
         for (RegistroMerma temp : mermas) {
             if (temp.getEstado().equals("Pendiente")) {
-                pendientes.add(temp);
+                mermaPendientes.add(temp);
             }
         }
-        return pendientes;
+        return mermaPendientes;
     }
 
     public String getMedicamento() {
@@ -97,10 +98,28 @@ public class MermaBean implements Serializable {
 
     private void descontarStock() throws Exception {
         Medicamento m = medicamentoFacade.find(medicamento);
-        int com = merma.getCantidad().compareTo(m.getStockFisico());
+        List<RegistroMerma> mp = new ArrayList<>();
+        long pendientes = 0;
+        for (RegistroMerma temp : mermaFacade.findAll()) {
+            if (temp.getEstado().equals("Pendiente")) {
+                if (temp.getMedicamentoCodigo().getCodigo().equals(m.getCodigo())) {
+                    mp.add(temp);
+                }
+            }
+        }
+        if (!mp.isEmpty()) {
+            for (RegistroMerma temp : mp) {
+                pendientes = pendientes + temp.getCantidad().longValue();
+            }
+        }
+        int com = merma.getCantidad().compareTo(BigInteger.valueOf(m.getStockFisico().longValue() - pendientes));
         if (com == -1 || com == 0) {
-            m.setStockDisponible(m.getStockDisponible().subtract(merma.getCantidad()));
-            medicamentoFacade.edit(m);
+            long diferenciaStock = m.getStockFisico().longValue() - m.getStockDisponible().longValue();
+            diferenciaStock = diferenciaStock - pendientes;
+            if (diferenciaStock < merma.getCantidad().longValue()) {
+                m.setStockDisponible(m.getStockDisponible().subtract(merma.getCantidad().subtract(BigInteger.valueOf(diferenciaStock))));
+                medicamentoFacade.edit(m);
+            }
         } else {
             throw new Exception("No puede descontar número mayor al Stock Fisico actual");
         }
@@ -117,28 +136,31 @@ public class MermaBean implements Serializable {
             m.setEstado("Pendiente");
             m.setIdReg(BigDecimal.ZERO);
             m.setMedicamentoCodigo(medicamentoFacade.find(medicamento));
-            this.mermaFacade.create(m);
             descontarStock();
+            this.mermaFacade.create(m);            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro de merma Agregado exitosamente!!!"));
             merma = new RegistroMerma();
             medicamento = null;
             return "RegistrarMerma";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error, vuelva a intentarlo ".concat(e.getMessage())));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "RegistrarMerma";
         }
     }
 
     public String descontarStockFisico(RegistroMerma merma) {
         RegistroMerma m = mermaFacade.find(merma.getIdReg());
+        Medicamento med = medicamentoFacade.find(m.getMedicamentoCodigo().getCodigo());
         m.setEstado("Aprobado");
+        med.setStockFisico(med.getStockFisico().subtract(m.getCantidad()));
         mermaFacade.edit(m);
+        medicamentoFacade.edit(med);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Stock físico descontado!!!"));
         return "descontarStockFisico";
     }
 
-    public String volver(){
+    public String volver() {
         return "RegistrarMerma?faces-redirect=true";
     }
-    
+
 }

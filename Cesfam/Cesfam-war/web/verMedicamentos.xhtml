@@ -56,8 +56,8 @@
                         <h:outputText value="#{rm.cantTotal}" />
                     </p:column>
 
-                    <p:column headerText="Estado">
-                        <p:selectOneMenu id="estado" value="#{rm.estado}" style="width:150px" required="true" requiredMessage="Debe escoger un estado para el medicamento">                            
+                    <p:column headerText="Estado" style="width:180px">
+                        <p:selectOneMenu id="estado" value="#{rm.estado}"  required="true" requiredMessage="Debe escoger un estado para el medicamento">                            
                             <f:selectItem itemLabel="Pendiente" itemValue="" noSelectionOption="true"/>
                             <f:selectItems value="#{recetaBean.estadosMedicamento}" var="e" itemLabel="#{e}" itemValue="#{e}"/>
                         </p:selectOneMenu>
