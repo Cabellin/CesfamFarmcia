@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Medicamentos de la receta</title>
+        <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
+        <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
+    </h:head>
+    <h:body>
+        <p:dataTable id="MedSeleccionadosTable" var="rm" value="#{recetaBean.seleccionados}" >
+
+
+            <p:column headerText="Nombre Comercial">
+                <h:outputText value="#{rm.medicamento.nomComercial}" />
+            </p:column>
+
+            <p:column headerText="Nombre Genérico">
+                <h:outputText value="#{rm.medicamento.nomGenericoId.descripcion}" />
+            </p:column>
+
+            <p:column headerText="Cantidad">
+                <h:outputText value="#{rm.cantidad}" />
+            </p:column>
+
+            <p:column headerText="Unidad">
+                <h:outputText value="#{rm.unidadC}" />
+            </p:column>
+
+            <p:column headerText="Cada">
+                <h:outputText value="#{rm.periodicidad}" />
+            </p:column>
+
+            <p:column headerText="Unidad">
+                <h:outputText value="#{rm.unidadP}" />
+            </p:column>
+
+            <p:column headerText="Por">
+                <h:outputText value="#{rm.extension}" />
+            </p:column>
+
+            <p:column headerText="Unidad">
+                <h:outputText value="#{rm.unidadE}" />
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>
+

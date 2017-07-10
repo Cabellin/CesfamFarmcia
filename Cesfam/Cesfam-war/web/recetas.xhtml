@@ -17,7 +17,7 @@
             <h:form>
                 <p:dataTable id="tbl" var="rec" emptyMessage="No se han encontrado resultados" value="#{recetaBean.recetas}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                             paginator="true" rows="10" style="margin-bottom:20px">
+                             paginator="true" rows="8" style="margin-bottom:20px" editable="true" filteredValue="#{recetaBean.filtro}">
 
                     <f:facet name="{Exporters}">
                         <h:commandLink>
@@ -26,12 +26,20 @@
                         </h:commandLink>
                     </f:facet>
 
+                    <p:column filterBy="#{rec.pacienteRut.rut}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Rut del Paciente" />
+                        </f:facet>
+                        <h:outputText value="#{rec.pacienteRut.rut}" />
+                    </p:column>
+
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Id" />
+                            <h:outputText value="Nombre del Medico" />
                         </f:facet>
-                        <h:outputText value="#{rec.id}" />
+                        <h:outputText value="#{rec.usuarioNomUsu.funcionarioRut.nombres} #{rec.usuarioNomUsu.funcionarioRut.apellidoPat}" />
                     </p:column>
+
 
                     <p:column>
                         <f:facet name="header">
@@ -51,25 +59,16 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column>
+                    <p:column >
                         <f:facet name="header">
                             <h:outputText value="Estado" />
                         </f:facet>
                         <h:outputText value="#{rec.estado}" />
                     </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nombre del Medico" />
-                        </f:facet>
-                        <h:outputText value="" />
-                    </p:column>
-
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Rut del Paciente" />
-                        </f:facet>
-                        <h:outputText value="" />
+                    <p:column style="width:34px">
+                        <p:commandButton id="medicamentosReceta" action="#{recetaBean.verMedicamentosReceta(rec)}" icon="ui-icon-search"/>
+                        <p:tooltip for="medicamentosReceta" value="Ver medicamentos" position="left"/>
                     </p:column>
 
                 </p:dataTable>

@@ -17,7 +17,7 @@
             <h:form>
                 <p:dataTable id="tbl" var="rec" emptyMessage="No se han encontrado resultados" value="#{recetaBean.recetas}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                             paginator="true" rows="10" style="margin-bottom:20px">
+                             paginator="true" rows="10" style="margin-bottom:20px" editable="true">
 
                     <f:facet name="{Exporters}">
                         <h:commandLink>
@@ -53,23 +53,30 @@
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Estado" />
+                            <h:outputText value="Rut del Paciente" />
                         </f:facet>
-                        <h:outputText value="#{rec.estado}" />
+                        <h:outputText value="#{rec.pacienteRut.rut}" />
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Nombre del Medico" />
                         </f:facet>
-                        <h:outputText value="" />
+                        <h:outputText value="#{rec.usuarioNomUsu.funcionarioRut.nombres} #{rec.usuarioNomUsu.funcionarioRut.apellidoPat}" />
                     </p:column>
 
-                    <p:column>
+                    <p:column >
                         <f:facet name="header">
-                            <h:outputText value="Rut del Paciente" />
+                            <h:outputText value="Estado" />
                         </f:facet>
-                        <h:outputText value="" />
+                        <h:outputText value="#{rec.estado}" />
+                    </p:column>
+
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton id="medicamentoReceta" update=":form:pacienteDetail" oncomplete="PF('pacienteDialog').show()" icon="ui-icon-person" title="View">
+                            <f:setPropertyActionListener value="#{p}" target="#{pacienteBean.paciente}" />
+                        </p:commandButton>
+                        <p:tooltip for="datosPaciente" value="Ver datos del paciente" position="left"/>
                     </p:column>
 
                 </p:dataTable>
