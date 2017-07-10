@@ -3,21 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/PasoDos.xhtml</file>
-            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/descontarStockFisico.xhtml</file>
-            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/cambiarCompuestos.xhtml</file>
-            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/beans/MedicamentoBean.java</file>
-=======
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/RegistrarMedicamentos.xhtml</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/beans/MedicamentoBean.java</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/converters/AccionFarmConverter.java</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/partida.xhtml</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/beans/PartidaBean.java</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/cambiarCompuestos.xhtml</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/Mantenedor.xhtml</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/PasoDos.xhtml</file>
->>>>>>> 2a1a422e381cb481902cac2fb1964ab3ce7d8f5d
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/beans/PartidaBean.java</file>
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/recetas.xhtml</file>
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/partida.xhtml</file>
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/Mantenedor.xhtml</file>
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/web/verMedicamentos.xhtml</file>
+            <file>file:/C:/Users/Pelao/Documents/GitHub/CesfamFarmcia/Cesfam/Cesfam-war/src/java/beans/RecetaBean.java</file>
         </group>
     </open-files>
 </project-private>

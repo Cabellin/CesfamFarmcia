@@ -53,6 +53,7 @@ public class RecetaBean implements Serializable {
     private List<RecetaMedicamento> seleccionados;
     private List<Medicamento> medicamentosBd;
     private List<Receta> recetas;
+    private List<Receta> filtro;
 
     
     public RecetaBean() {
@@ -70,6 +71,13 @@ public class RecetaBean implements Serializable {
         this.recmed = recmed;
     }
 
+    public List<Receta> getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(List<Receta> filtro) {
+        this.filtro = filtro;
+    }
     
     public String getMedicamento() {
         return medicamento;
@@ -98,7 +106,7 @@ public class RecetaBean implements Serializable {
     }
 
     public List<Receta> getRecetas() {
-        return recetas;
+        return recetaFacade.findAll();
     }
 
     public void setRecetas(List<Receta> recetas) {
@@ -120,7 +128,7 @@ public class RecetaBean implements Serializable {
     public void setMedicamentosBd(List<Medicamento> medicamentosBd) {
         this.medicamentosBd = medicamentosBd;
     }
-
+    
     public String verificarRut(){
         Paciente p = pacienteFacade.find(paciente.getRut());
         if (p != null) {
@@ -165,6 +173,16 @@ public class RecetaBean implements Serializable {
     
     public String entregarMedicamentos(){
         return " ";
+    }
+    
+    public String verMedicamentosReceta(Receta r){
+        receta = r;
+        //crear medicamento receta
+        return "verMedicamentos?faces-redirect=true"; 
+    }
+    
+    public String cancelar(){
+        return "recetas?faces-redirect=true";
     }
     
 }
