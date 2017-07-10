@@ -137,7 +137,7 @@ public class UsuarioBean implements Serializable {
         return funcionarioFacade.find(rut);
     }
     
-     public void login(ActionEvent event) {
+    public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
         Usuario u = usuarioFacade.find(nomUsu);
@@ -158,7 +158,25 @@ public class UsuarioBean implements Serializable {
             
         }
     }
-     
+    
+    public void loginConfirmar(ActionEvent event) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message = null;
+        Usuario u = usuarioFacade.find(nomUsu);
+        contrasena = DigestUtils.md5Hex(contrasena);
+
+        if (u != null && contrasena != null && contrasena.equals(u.getContrasena()) && u.getFuncionarioRut().getTipoFuncId().getId().intValueExact() == 2) {
+            loggedIn = true;
+            context.addCallbackParam("loggedIn", loggedIn);
+            context.addCallbackParam("view", "faces/descontarStockFisico.xhtml");
+        } else {
+            loggedIn = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Nombre de usuario o clave no válida");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            context.addCallbackParam("view", "faces/logueoDescontar.xhtml");    
+        }
+    }
+    
     public boolean verificarSesionMenu() {
         FacesContext context = FacesContext.getCurrentInstance();
         Usuario u1 = (Usuario) context.getExternalContext().getSessionMap().get("usuario");
