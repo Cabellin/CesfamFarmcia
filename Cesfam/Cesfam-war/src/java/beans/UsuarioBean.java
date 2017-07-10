@@ -234,10 +234,6 @@ public class UsuarioBean implements Serializable {
             item.setOutcome("RegistrarMerma");
             menu.addElement(item);
             
-            item = new DefaultMenuItem("ENTREGAR MEDICAMENTOS");
-            item.setOutcome("EntregarMedicamentos");
-            menu.addElement(item);
-            
         }
         return menu;
 

@@ -10,16 +10,16 @@ import pojos.Paciente;
 import pojos.RecetaMedicamento;
 import pojos.Usuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-08T01:08:14")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-10T00:30:16")
 @StaticMetamodel(Receta.class)
 public class Receta_ { 
 
-    public static volatile SingularAttribute<Receta, Paciente> pacienteRut;
-    public static volatile SingularAttribute<Receta, Date> fecha;
-    public static volatile SingularAttribute<Receta, String> estado;
-    public static volatile ListAttribute<Receta, RecetaMedicamento> recetaMedicamentoList;
-    public static volatile SingularAttribute<Receta, Usuario> usuarioNomUsu;
-    public static volatile SingularAttribute<Receta, Date> hora;
     public static volatile SingularAttribute<Receta, BigDecimal> id;
+    public static volatile SingularAttribute<Receta, Date> hora;
+    public static volatile SingularAttribute<Receta, String> estado;
+    public static volatile SingularAttribute<Receta, Date> fecha;
+    public static volatile SingularAttribute<Receta, Usuario> usuarioNomUsu;
+    public static volatile ListAttribute<Receta, RecetaMedicamento> recetaMedicamentoList;
+    public static volatile SingularAttribute<Receta, Paciente> pacienteRut;
 
 }

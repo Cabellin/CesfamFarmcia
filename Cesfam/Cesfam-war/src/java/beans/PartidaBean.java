@@ -238,6 +238,7 @@ public class PartidaBean implements Serializable {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(p.getCorreo()));
+            message.setRecipients(Message.RecipientType.CC,InternetAddress.parse(p.getCorreo2()));
             message.setSubject("Su medicamento ha llegado a nuestra farmacia");
             message.setText("Estimado " + p.getNombres()+ " " + p.getApellidoPat()+ "\n"
                     + "Se le comunica que el medicamento que se encuentra reservado a su nombre ya tiene stock, se le solicita retirarlo en el mezón de atención al paciente de nuestra farmacia a la brevedad. " + "\n" + "\n"

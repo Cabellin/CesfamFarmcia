@@ -27,6 +27,7 @@ import pojos.RecetaMedicamento;
 import pojos.RecetaMedicamentoPK;
 import services.MedicamentoFacadeLocal;
 import services.PacienteFacadeLocal;
+import services.RecetaMedicamentoFacadeLocal;
 
 /**
  *
@@ -36,6 +37,8 @@ import services.PacienteFacadeLocal;
 @ManagedBean
 @SessionScoped
 public class RecetaBean implements Serializable {
+    @EJB
+    private RecetaMedicamentoFacadeLocal recetaMedicamentoFacade;
 
     @EJB
     private PacienteFacadeLocal pacienteFacade;
@@ -50,7 +53,7 @@ public class RecetaBean implements Serializable {
     private Paciente paciente;
     private String medicamento;
     private RecetaMedicamento recmed;
-    private List<RecetaMedicamento> seleccionados;
+    private List<RecetaMedicamento> recList;
     private List<Medicamento> medicamentosBd;
     private List<Receta> recetas;
     private List<Receta> filtro;
@@ -59,7 +62,6 @@ public class RecetaBean implements Serializable {
     public RecetaBean() {
         paciente = new Paciente();
         receta = new Receta();
-        seleccionados = new ArrayList<RecetaMedicamento>();
         medicamentosBd = new ArrayList<Medicamento>();
     }
 
@@ -86,8 +88,14 @@ public class RecetaBean implements Serializable {
     public void setMedicamento(String medicamento) {
         this.medicamento = medicamento;
     }
-    
-    
+
+    public List<RecetaMedicamento> getRecList() {
+        return recList;
+    }
+
+    public void setRecList(List<RecetaMedicamento> recList) {
+        this.recList = recList;
+    }
 
     public Paciente getPaciente() {
         return paciente;
@@ -113,14 +121,6 @@ public class RecetaBean implements Serializable {
         this.recetas = recetas;
     } 
     
-    public List<RecetaMedicamento> getSeleccionados() {
-        return seleccionados;
-    }
-
-    public void setSeleccionados(List<RecetaMedicamento> seleccionados) {
-        this.seleccionados = seleccionados;
-    }
-
     public List<Medicamento> getMedicamentosBd() {
         return medicamentosBd;
     }
@@ -177,7 +177,7 @@ public class RecetaBean implements Serializable {
     
     public String verMedicamentosReceta(Receta r){
         receta = r;
-        //crear medicamento receta
+        recList = receta.getRecetaMedicamentoList();
         return "verMedicamentos?faces-redirect=true"; 
     }
     
@@ -185,4 +185,7 @@ public class RecetaBean implements Serializable {
         return "recetas?faces-redirect=true";
     }
     
+    public String entregarMedicamento(){
+        return "";
+    }
 }

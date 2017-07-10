@@ -10,42 +10,53 @@
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
         <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body>
-        <p:dataTable id="MedSeleccionadosTable" var="rm" value="#{recetaBean.seleccionados}" >
+    <h:body style="background-image: url('../resources/images/farmacia1.jpg');">
+        <center>
+            <br/><br/><br/><br/><br/>
+            <h:form id="form">
+                <p:messages id="mensaje" autoUpdate="false"/>
+                <p:dataTable id="MedSeleccionadosTable" var="rm" value="#{recetaBean.recList}" style="max-width: 1300px;" emptyMessage="No existen medicamentos de esta receta en la base de datos">
+                    <p:column headerText="Nombre Comercial">
+                        <h:outputText value="#{rm.medicamento.nomComercial}" />
+                    </p:column>
 
+                    <p:column headerText="Nombre Genérico">
+                        <h:outputText value="#{rm.medicamento.nomGenericoId.descripcion}" />
+                    </p:column>
 
-            <p:column headerText="Nombre Comercial">
-                <h:outputText value="#{rm.medicamento.nomComercial}" />
-            </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{rm.cantidad}" />
+                    </p:column>
 
-            <p:column headerText="Nombre Genérico">
-                <h:outputText value="#{rm.medicamento.nomGenericoId.descripcion}" />
-            </p:column>
+                    <p:column headerText="Unidad">
+                        <h:outputText value="#{rm.unidadC}" />
+                    </p:column>
 
-            <p:column headerText="Cantidad">
-                <h:outputText value="#{rm.cantidad}" />
-            </p:column>
+                    <p:column headerText="Cada">
+                        <h:outputText value="#{rm.periodicidad}" />
+                    </p:column>
 
-            <p:column headerText="Unidad">
-                <h:outputText value="#{rm.unidadC}" />
-            </p:column>
+                    <p:column headerText="Unidad">
+                        <h:outputText value="#{rm.unidadP}" />
+                    </p:column>
 
-            <p:column headerText="Cada">
-                <h:outputText value="#{rm.periodicidad}" />
-            </p:column>
+                    <p:column headerText="Por">
+                        <h:outputText value="#{rm.extension}" />
+                    </p:column>
 
-            <p:column headerText="Unidad">
-                <h:outputText value="#{rm.unidadP}" />
-            </p:column>
-
-            <p:column headerText="Por">
-                <h:outputText value="#{rm.extension}" />
-            </p:column>
-
-            <p:column headerText="Unidad">
-                <h:outputText value="#{rm.unidadE}" />
-            </p:column>
-        </p:dataTable>
+                    <p:column headerText="Unidad">
+                        <h:outputText value="#{rm.unidadE}" />
+                    </p:column>
+                    
+                    <p:column style="width:34px">
+                        <p:commandButton id="entregarMedicamento" action="#{recetaBean.entregarMedicamento()}" icon="ui-icon-check"/>
+                        <p:tooltip for="entregarMedicamento" value="Entregar Medicamento" position="right"/>
+                    </p:column>
+                </p:dataTable>
+                <br/><br/><br/>
+                <p:commandButton value="Cancelar" action="#{recetaBean.cancelar()}" ajax="false"/>
+            </h:form>
+        </center>
     </h:body>
 </html>
 

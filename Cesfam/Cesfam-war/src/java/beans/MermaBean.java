@@ -39,6 +39,7 @@ public class MermaBean implements Serializable {
     private RegistroMerma merma;
     private String medicamento;
     private List<Medicamento> medicamentos;
+    private List<RegistroMerma> mermaPendientes;
 
     public MermaBean() {
         merma = new RegistroMerma();
@@ -52,6 +53,19 @@ public class MermaBean implements Serializable {
         this.merma = merma;
     }
 
+    public List<RegistroMerma> getMermaPendientes() {
+        List<RegistroMerma> mermas = mermaFacade.findAll();
+        List<RegistroMerma> pendientes = new ArrayList<RegistroMerma>();
+        for (RegistroMerma temp : mermas)
+        {
+            if(temp.getEstado().equals("Pendiente"))
+            {
+                pendientes.add(temp);
+            }
+        }
+        return pendientes;
+    }
+    
     public String getMedicamento() {
         return medicamento;
     }
@@ -102,6 +116,7 @@ public class MermaBean implements Serializable {
             m.setMotivo(merma.getMotivo());
             m.setFecha(new Date());
             m.setHora(new Date());
+            m.setEstado("Pendiente");
             m.setIdReg(BigDecimal.ZERO);
             m.setMedicamentoCodigo(medicamentoFacade.find(medicamento));
             this.mermaFacade.create(m);
