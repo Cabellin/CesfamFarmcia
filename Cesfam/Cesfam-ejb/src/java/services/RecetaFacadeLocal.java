@@ -6,14 +6,13 @@
 package services;
 
 import java.util.List;
-import javax.ejb.Local;
 import pojos.Receta;
 
 /**
  *
  * @author Sebastian
  */
-@Local
+@javax.ejb.Local
 public interface RecetaFacadeLocal {
 
     void create(Receta receta);

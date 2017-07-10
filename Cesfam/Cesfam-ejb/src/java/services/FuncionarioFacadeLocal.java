@@ -6,14 +6,13 @@
 package services;
 
 import java.util.List;
-import javax.ejb.Local;
 import pojos.Funcionario;
 
 /**
  *
  * @author Sebastian
  */
-@Local
+@javax.ejb.Local
 public interface FuncionarioFacadeLocal {
 
     void create(Funcionario funcionario);

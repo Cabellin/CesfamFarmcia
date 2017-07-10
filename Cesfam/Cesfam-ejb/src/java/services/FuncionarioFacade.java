@@ -5,7 +5,6 @@
  */
 package services;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Funcionario;
@@ -14,7 +13,7 @@ import pojos.Funcionario;
  *
  * @author Sebastian
  */
-@Stateless
+@javax.ejb.Stateless
 public class FuncionarioFacade extends AbstractFacade<Funcionario> implements FuncionarioFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

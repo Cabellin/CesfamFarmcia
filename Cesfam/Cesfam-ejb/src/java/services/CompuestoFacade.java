@@ -5,7 +5,6 @@
  */
 package services;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Compuesto;
@@ -14,7 +13,7 @@ import pojos.Compuesto;
  *
  * @author Sebastian
  */
-@Stateless
+@javax.ejb.Stateless
 public class CompuestoFacade extends AbstractFacade<Compuesto> implements CompuestoFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

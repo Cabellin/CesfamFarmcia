@@ -20,8 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -46,34 +44,24 @@ public class Medicamento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "CODIGO")
     private String codigo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "NOM_COMERCIAL")
     private String nomComercial;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CONTENIDO")
     private BigInteger contenido;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "UNIDAD_CONT")
     private String unidadCont;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "U_POR_CAJA")
     private BigInteger uPorCaja;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "STOCK_DISPONIBLE")
     private BigInteger stockDisponible;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "STOCK_FISICO")
     private BigInteger stockFisico;
     @ManyToMany(mappedBy = "medicamentoList")

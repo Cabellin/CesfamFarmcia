@@ -20,8 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,34 +44,25 @@ public class RegistroMerma implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_REG")
     private BigDecimal idReg;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "MOTIVO")
     private String motivo;
-    @Size(max = 100)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "FECHA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "HORA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date hora;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "ESTADO")
     private String estado;
     @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO")

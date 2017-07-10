@@ -5,7 +5,6 @@
  */
 package services;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.ViaAdministracion;
@@ -14,7 +13,7 @@ import pojos.ViaAdministracion;
  *
  * @author Sebastian
  */
-@Stateless
+@javax.ejb.Stateless
 public class ViaAdministracionFacade extends AbstractFacade<ViaAdministracion> implements ViaAdministracionFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

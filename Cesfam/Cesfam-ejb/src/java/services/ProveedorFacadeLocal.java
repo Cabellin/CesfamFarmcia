@@ -6,14 +6,13 @@
 package services;
 
 import java.util.List;
-import javax.ejb.Local;
 import pojos.Proveedor;
 
 /**
  *
  * @author Sebastian
  */
-@Local
+@javax.ejb.Local
 public interface ProveedorFacadeLocal {
 
     void create(Proveedor proveedor);

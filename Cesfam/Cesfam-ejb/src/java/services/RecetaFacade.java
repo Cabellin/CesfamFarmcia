@@ -5,7 +5,6 @@
  */
 package services;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Receta;
@@ -14,7 +13,7 @@ import pojos.Receta;
  *
  * @author Sebastian
  */
-@Stateless
+@javax.ejb.Stateless
 public class RecetaFacade extends AbstractFacade<Receta> implements RecetaFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

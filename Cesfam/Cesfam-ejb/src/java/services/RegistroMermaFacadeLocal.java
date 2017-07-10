@@ -6,14 +6,13 @@
 package services;
 
 import java.util.List;
-import javax.ejb.Local;
 import pojos.RegistroMerma;
 
 /**
  *
  * @author Sebastian
  */
-@Local
+@javax.ejb.Local
 public interface RegistroMermaFacadeLocal {
 
     void create(RegistroMerma registroMerma);

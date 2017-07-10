@@ -6,14 +6,13 @@
 package services;
 
 import java.util.List;
-import javax.ejb.Local;
 import pojos.MedicamentoCompuesto;
 
 /**
  *
  * @author Sebastian
  */
-@Local
+@javax.ejb.Local
 public interface MedicamentoCompuestoFacadeLocal {
 
     void create(MedicamentoCompuesto medicamentoCompuesto);

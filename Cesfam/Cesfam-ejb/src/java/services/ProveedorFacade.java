@@ -5,7 +5,6 @@
  */
 package services;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Proveedor;
@@ -14,7 +13,7 @@ import pojos.Proveedor;
  *
  * @author Sebastian
  */
-@Stateless
+@javax.ejb.Stateless
 public class ProveedorFacade extends AbstractFacade<Proveedor> implements ProveedorFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")
