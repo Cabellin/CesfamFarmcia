@@ -116,19 +116,18 @@ public class PartidaBean implements Serializable {
         this.seleccionados = seleccionados;
     }
 
-    private BigInteger obtenerId() {
+    private void obtenerId() {
         BigInteger id;
         String idS;
         Date now = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyyMMddHHmmss");
         idS = ft.format(now);
         id = BigInteger.valueOf(Long.parseLong(idS));
-        return id;
+        partida.setId(BigDecimal.valueOf(id.longValue()));
     }
 
     public void onDrop(DragDropEvent ddEvent) {
         Medicamento m = ((Medicamento) ddEvent.getData());
-        partida.setId(BigDecimal.valueOf(obtenerId().longValue()));
         MedicamentoPartida mp = new MedicamentoPartida(new MedicamentoPartidaPK(partida.getId().toBigInteger(), m.getCodigo()), BigInteger.ZERO, null);
         mp.setMedicamento(m);
 
@@ -142,6 +141,7 @@ public class PartidaBean implements Serializable {
     }
 
     public String partidaComienzo() {
+        obtenerId();
         if (medicamentosBd == null || seleccionados == null) {
             medicamentosBd = medicamentoFacade.findAll();
             seleccionados = new ArrayList<MedicamentoPartida>();

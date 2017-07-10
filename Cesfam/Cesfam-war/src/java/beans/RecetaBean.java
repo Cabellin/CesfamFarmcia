@@ -137,7 +137,7 @@ public class RecetaBean implements Serializable {
             if (recmed.getEstado().equals("Entregado")) {
                 if (com == -1 || com == 0) {
                     m.setStockDisponible(m.getStockDisponible().subtract(recmed.getCantTotal()));
-                    m.setStockDisponible(m.getStockFisico().subtract(recmed.getCantTotal()));
+                    m.setStockFisico(m.getStockFisico().subtract(recmed.getCantTotal()));
                     medicamentoFacade.edit(m);
                 } else {
                     throw new Exception("No puede descontar número mayor al Stock Fisico actual");
@@ -163,16 +163,16 @@ public class RecetaBean implements Serializable {
         return "verMedicamentos";
     }
 
-    private void obtenerRecetasPendientes(){
+    private void obtenerRecetasPendientes() {
         recetas = new ArrayList<>();
         List<Receta> todasRecetas = recetaFacade.findAll();
         for (Receta temp : todasRecetas) {
             if (temp.getEstado().equals("Pendiente")) {
                 recetas.add(temp);
-            }            
+            }
         }
     }
-    
+
     private void verificarPendientes() throws Exception {
         for (RecetaMedicamento temp : recetaMedList) {
             if (temp.getEstado().equals("Pendiente")) {
@@ -198,11 +198,11 @@ public class RecetaBean implements Serializable {
         OUTER:
         for (RecetaMedicamento temp : recetaMedList) {
             switch (temp.getEstado()) {
-                case "Reservado":
-                    receta.setEstado("Reservado");
-                    return;
                 case "Permanente":
                     receta.setEstado("Permanente");
+                    break;
+                case "Reservado":
+                    receta.setEstado("Reservado");
                     return;
                 default:
                     receta.setEstado("Listo");
