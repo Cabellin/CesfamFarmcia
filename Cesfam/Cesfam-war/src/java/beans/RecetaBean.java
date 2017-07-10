@@ -137,6 +137,7 @@ public class RecetaBean implements Serializable {
             if (recmed.getEstado().equals("Entregado")) {
                 if (com == -1 || com == 0) {
                     m.setStockDisponible(m.getStockDisponible().subtract(recmed.getCantTotal()));
+                    m.setStockDisponible(m.getStockFisico().subtract(recmed.getCantTotal()));
                     medicamentoFacade.edit(m);
                 } else {
                     throw new Exception("No puede descontar número mayor al Stock Fisico actual");

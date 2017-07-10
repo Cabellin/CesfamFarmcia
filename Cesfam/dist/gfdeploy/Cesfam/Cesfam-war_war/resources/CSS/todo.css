@@ -1,0 +1,164 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10-04-2017, 11:56:29 PM
+    Author     : Felipe 
+*/
+
+h1,h2{
+    color: #323133 ;
+    font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+    letter-spacing: -1px;
+    text-decoration: none; 
+    text-shadow: 1px 1px #fff, 0 0 #0e0e0e, 2px 3px 1px #e3e3e3; 
+    text-transform: none; 
+    word-spacing: -2px;
+    text-shadow: 3px 1px 1px rgba(126, 126, 124, 1);
+    margin-left:35px;
+}
+
+
+.ppa {
+    margin: 100px;
+    padding: 10px 20px 10px 20px; 
+    -moz-transition: all 0.8s ease-in-out;
+    -webkit-transition: all 0.8s ease-in-out;
+    -o-transition: all 0.8s ease-in-out;
+    -ms-transition: all 0.8s ease-in-out;
+    transition: all 0.8s ease-in-out;
+
+
+}
+
+ .a:hover{
+-moz-transform: rotate(360deg);
+-webkit-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+
+ .b:hover{
+-moz-transform: rotate(360deg);
+-webkit-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+
+ .c:hover{
+-moz-transform: rotate(360deg);
+-webkit-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+
+
+.btn {
+    background: #3498db ; 
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9); 
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9); 
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9); 
+    background-image: -o-linear-gradient(top, #3498db, #2980b9); 
+    background-image: linear-gradient(to bottom, #3498db, #2980b9); 
+    -webkit-border-radius: 28px; 
+    -moz-border-radius: 28px; 
+    border-radius: 28px; 
+    font-family: Arial; 
+    color: #ffffff; 
+    font-size: 20px; 
+    padding: 10px 20px 10px 20px; 
+    text-decoration: none; 
+}
+
+.btn:hover {
+    background: #2F4F4F; 
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db); 
+    text-decoration: none; 
+}
+
+.btnn {
+    background: #DCDCDC; 
+    font-family: Arial; 
+    color: #ffffff; 
+    padding: 5px 25px 5px 25px; 
+    text-decoration: none; 
+
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border: 2px solid #A9A9A9;
+}
+
+.btnn:hover {
+    background: #3cb0fd ; 
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db); 
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db); 
+    text-decoration: none; 
+}
+
+.as ul { 
+    list-style-type: none; 
+    margin: 0px; 
+    padding:0px; 
+    overflow: hidden; 
+    background-color: #333; 
+    text-decoration: #ffffff; 
+    text-align:center; 
+    border-radius: 61px 61px 61px 61px; 
+    -moz-border-radius: 61px 61px 61px 61px; 
+    -webkit-border-radius: 61px 61px 61px 61px; 
+    border: 0px solid #000000; 
+
+}
+
+.as li { 
+    float: left; 
+    margin:10px; 
+    border-right:60px solid #333; 
+
+} 
+
+.as li a { 
+    display: block; 
+    color: white; 
+    text-align: center; 
+    padding: 25px 16px; 
+    text-decoration: #ffffff; 
+    -webkit-animation-delay: 2s; /* Safari 4.0 - 8.0 */ 
+    animation-delay: 8s; 
+} 
+
+
+/* Change the link color to #111 (black) on hover */ 
+.as li a:hover { 
+    background-color: #111; 
+    border-radius: 61px 61px 61px 61px;
+} 
+
+.as li a:hover:not(.active) { 
+    background-color: #2F4F4F;
+    border: 0px;
+    margin: 0px;
+}   
+.as active { 
+
+    padding: 60px; 
+    text-align:center; 
+} 
+
+ppa:hover  {
+    background-color: #111; 
+    border-radius: 61px 61px 61px 61px;
+}

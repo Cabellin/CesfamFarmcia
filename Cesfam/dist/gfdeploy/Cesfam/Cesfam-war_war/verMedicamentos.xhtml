@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Medicamentos de la receta</title>
+        <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
+        <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
+    </h:head>
+    <h:body style="background-image: url('../resources/images/farmacia1.jpg');">
+        <center>
+            <br/><br/><br/><br/><br/>
+            <h:form>
+            <p:commandButton value="Entregar Todos" action="#{recetaBean.entregarTodos()}" ajax="false"/>
+            </h:form>
+            <h:form id="form">
+                <p:messages id="mensaje" autoUpdate="false"/>
+                
+                <p:dataTable id="MedSeleccionadosTable" var="rm" value="#{recetaBean.recetaMedList}" style="max-width: 1500px;" emptyMessage="No existen medicamentos de esta receta en la base de datos">
+                    <p:column headerText="Nombre Comercial">
+                        <h:outputText value="#{rm.medicamento.nomComercial}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre Genérico">
+                        <h:outputText value="#{rm.medicamento.nomGenericoId.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Cantidad" style="width: 80px">
+                        <h:outputText value="#{rm.cantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Unidad" style="width: 80px">
+                        <h:outputText value="#{rm.unidadC}" />
+                    </p:column>
+
+                    <p:column headerText="Cada" style="width: 80px">
+                        <h:outputText value="#{rm.periodicidad}" />
+                    </p:column>
+
+                    <p:column headerText="Unidad" style="width: 80px">
+                        <h:outputText value="#{rm.unidadP}" />
+                    </p:column>
+
+                    <p:column headerText="Por" style="width: 80px">
+                        <h:outputText value="#{rm.extension}" />
+                    </p:column>
+
+                    <p:column headerText="Unidad" style="width: 80px">
+                        <h:outputText value="#{rm.unidadE}" />
+                    </p:column>
+                    
+                    <p:column headerText="Cantidad Total">
+                        <h:outputText value="#{rm.cantTotal}" />
+                    </p:column>
+
+                    <p:column headerText="Estado">
+                        <p:selectOneMenu id="estado" value="#{rm.estado}" style="width:150px" required="true" requiredMessage="Debe escoger un estado para el medicamento">                            
+                            <f:selectItem itemLabel="Pendiente" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{recetaBean.estadosMedicamento}" var="e" itemLabel="#{e}" itemValue="#{e}"/>
+                        </p:selectOneMenu>
+                        <p:tooltip for="estado" value="Escoger que se hará con el medicamento" position="left"/>
+                    </p:column>
+                    
+                    <p:column headerText="Stock disponible">
+                        <h:outputText value="#{rm.medicamento.stockDisponible}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                <br/><br/><br/>
+                <p:button value="Cancelar" outcome="#{recetaBean.cancelar()}" />
+                <p:commandButton id="confirmar" value="Confirmar" action="#{recetaBean.confirmarReceta()}" ajax="false"/>                   
+                <p:tooltip for="confirmar" value="Confirmar receta" position="right"/>                
+            </h:form>
+        </center>
+    </h:body>
+</html>
+

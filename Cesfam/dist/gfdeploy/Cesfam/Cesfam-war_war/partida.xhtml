@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Partidas</title>
+        <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
+        <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
+    </h:head>
+    <h:body onload="#{partidaBean.partidaComienzo()}" style="background-image: url('../resources/images/farmacia1.jpg');">
+
+
+        <ui:include src="includes/menu.xhtml"/>
+        <br/><br/>
+        <center>            
+            <p:panel id="Registrar" header="REGISTRO PARTIDA" style="margin-top: 20px ;max-height: min-content; width: 1000px;">
+
+                <h:form id="form">
+                    <p:messages id="mensaje" showDetail="false" autoUpdate="false"/>
+                    <br/><br/>
+
+                    <p:selectOneMenu id="proveedores" value="#{partidaBean.proveedorId}" style="width:150px" required="true" requiredMessage="Debe escoger un proveedor">
+                        <f:selectItem itemLabel="Seleccione Proveedor" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{partidaBean.proveedores}" var="p" itemLabel="#{p.descripcion}" itemValue="#{p.id}" />
+                    </p:selectOneMenu>                    
+
+                    <p:fieldset id="medicamentosDisponiblesField" legend="Medicamentos" style="margin-top:20px; max-width: 800px">
+                        <p:dataTable id="medicamentosDisponibles" var="m" value="#{partidaBean.medicamentosBd}" paginator="true" rows="7" emptyMessage="No se han encontrado resultados">
+                            <p:column style="width:20px">
+                                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                            </p:column>
+
+                            <p:column headerText="Nombre Comercial">
+                                <h:outputText value="#{m.nomComercial}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre Genérico">
+                                <h:outputText value="#{m.nomGenericoId.descripcion}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                    <p:fieldset id="medSeleccionadosField" legend="Medicamentos Seleccionados" style="margin-top:20px; max-width: 800px">
+                        <p:outputPanel id="dropArea">
+                            <h:outputText value="!!!Suelte aquí los medicamentos!!!" rendered="#{empty partidaBean.seleccionados}" style="font-size:24px;" />
+                            <p:dataTable id="MedSeleccionadosTable" var="mp" value="#{partidaBean.seleccionados}" editable="true" editMode="cell" widgetVar="cellMp" rendered="#{not empty partidaBean.seleccionados}">
+
+                                <p:column style="width:34px">
+                                    <p:commandButton id="eliminar" action='#{partidaBean.quitarMedicamento(mp)}' update=":form" icon="ui-icon-closethick" />
+                                    <p:tooltip for="eliminar" value="Quitar" position="right"/>
+                                </p:column>
+
+                                <p:column headerText="Nombre Comercial">
+                                    <h:outputText value="#{mp.medicamento.nomComercial}" />
+                                </p:column>
+                                <p:column headerText="Nombre Genérico">
+                                    <h:outputText value="#{mp.medicamento.nomGenericoId.descripcion}" />
+                                </p:column>
+                                <p:column headerText="Cantidad">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{mp.cantidad}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{mp.cantidad}" style="width:96%" label="Cantidad" onkeypress="return justNumbers(event);"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Fecha de Vencimiento" >
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{mp.fechaVencimiento}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText></f:facet>
+                                        <f:facet name="input"><p:calendar id="mask" value="#{mp.fechaVencimiento}" pattern="dd-MM-yyyy" mask="true" style="width: 200px" mindate="1" label="Fecha de Vencimiento"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                            </p:dataTable>
+                            <p:contextMenu for="MedSeleccionadosTable" widgetVar="cMenu">   
+                                <p:menuitem value="Editar Celda" icon="ui-icon-search" onclick="PF('cellMp').showCellEditor();return false;"/>  
+                                <p:menuitem value="Ocultar Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                            </p:contextMenu> 
+                        </p:outputPanel>
+                    </p:fieldset>
+
+                    <br/><br/>                    
+
+                    <p:droppable for="medSeleccionadosField" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="medicamentosDisponibles" onDrop="handleDrop" >
+                        <p:ajax listener="#{partidaBean.onDrop}" update="dropArea medicamentosDisponibles" />
+                    </p:droppable>
+
+                    <br/><br/><br/>
+
+                    <p:commandButton value="Ingresar Partida" update="mensaje" action="#{partidaBean.crearPartida()}" ajax="false"/>
+                </h:form>
+                <br/><br/><br/>
+
+
+                <h:form>
+                    <h:outputText value="¿No encuentra el medicamento en la lista?" /> &nbsp;&nbsp; &nbsp;&nbsp;
+                    <p:commandButton value="Nuevo Medicamento" action="RegistrarMedicamentos?faces-redirect=true" icon="ui-icon-plusthick" ajax="false"/>                   
+                </h:form>
+                <br/><br/><br/>
+            </p:panel>
+        </center>
+
+        <script type="text/javascript">
+            function justNumbers(e)
+            {
+                var keynum = window.event ? window.event.keyCode : e.which;
+                if (keynum == 8)
+                    return true;
+
+                return /\d/.test(String.fromCharCode(keynum));
+            }
+
+            function letras(e)
+            {
+                var tecla = window.event ? window.event.keyCode : e.which;
+                if (tecla == 8)
+                    return true;
+
+                patron = /[A-Za-z\s]/; // 4
+                te = String.fromCharCode(tecla); // 5
+                return patron.test(te);
+
+            }
+
+        </script>
+
+        <script type="text/javascript">
+            function handleDrop(event, ui) {
+                var droppedCar = ui.draggable;
+
+                droppedCar.fadeOut('fast');
+            }
+        </script>
+
+        <h:outputScript name="js/spanishLocale.js" />
+
+    </h:body>
+
+</html>
+
