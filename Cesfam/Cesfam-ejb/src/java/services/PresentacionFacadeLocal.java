@@ -6,13 +6,14 @@
 package services;
 
 import java.util.List;
+import javax.ejb.Local;
 import pojos.Presentacion;
 
 /**
  *
  * @author Sebastian
  */
-@javax.ejb.Local
+@Local
 public interface PresentacionFacadeLocal {
 
     void create(Presentacion presentacion);

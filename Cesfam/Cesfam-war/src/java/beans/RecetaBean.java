@@ -210,6 +210,14 @@ public class RecetaBean implements Serializable {
             }
         }
     }
+    
+    private void insertarFechaPermanentes(){
+        for (RecetaMedicamento temp : recetaMedList) {
+            if (temp.getEstado().equals("Permanente")) {
+                temp.setUltimaEntrega(new Date());
+            }
+        }
+    }
 
     public void verificarStock() throws Exception {
         for (RecetaMedicamento temp : recetaMedList) {
@@ -224,6 +232,7 @@ public class RecetaBean implements Serializable {
             verificarPendientes();
             verificarStock();
             cambiarEstadoReceta();
+            insertarFechaPermanentes();
             receta.setRecetaMedicamentoList(recetaMedList);
             recetaFacade.edit(receta);
             descontarStock();

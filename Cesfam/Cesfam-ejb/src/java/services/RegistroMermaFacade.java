@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.RegistroMerma;
@@ -13,7 +14,7 @@ import pojos.RegistroMerma;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class RegistroMermaFacade extends AbstractFacade<RegistroMerma> implements RegistroMermaFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

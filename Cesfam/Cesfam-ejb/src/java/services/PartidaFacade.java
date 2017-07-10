@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Partida;
@@ -13,7 +14,7 @@ import pojos.Partida;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class PartidaFacade extends AbstractFacade<Partida> implements PartidaFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

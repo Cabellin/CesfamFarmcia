@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Usuario;
@@ -13,7 +14,7 @@ import pojos.Usuario;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

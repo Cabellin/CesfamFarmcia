@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.AccionFarm;
@@ -13,7 +14,7 @@ import pojos.AccionFarm;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class AccionFarmFacade extends AbstractFacade<AccionFarm> implements AccionFarmFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

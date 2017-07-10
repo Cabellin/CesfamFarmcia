@@ -6,13 +6,14 @@
 package services;
 
 import java.util.List;
+import javax.ejb.Local;
 import pojos.Compuesto;
 
 /**
  *
  * @author Sebastian
  */
-@javax.ejb.Local
+@Local
 public interface CompuestoFacadeLocal {
 
     void create(Compuesto compuesto);

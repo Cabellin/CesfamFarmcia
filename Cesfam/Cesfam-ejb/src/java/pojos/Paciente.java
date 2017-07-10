@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -53,39 +55,54 @@ public class Paciente implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "RUT")
     private BigDecimal rut;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "DV")
     private Character dv;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "NOMBRES")
     private String nombres;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_PAT")
     private String apellidoPat;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_MAT")
     private String apellidoMat;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "FECHA_NACI")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNaci;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "SEXO")
     private Character sexo;
+    @Size(max = 15)
     @Column(name = "ESTADO_CIVIL")
     private String estadoCivil;
+    @Size(max = 50)
     @Column(name = "DIRECCION")
     private String direccion;
     @Column(name = "FONO")
     private BigInteger fono;
     @Column(name = "FONO2")
     private BigInteger fono2;
+    @Size(max = 50)
     @Column(name = "CORREO")
     private String correo;
+    @Size(max = 50)
     @Column(name = "CORREO2")
     private String correo2;
+    @Size(max = 25)
     @Column(name = "PREVISION")
     private String prevision;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pacienteRut")

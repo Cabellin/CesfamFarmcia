@@ -6,13 +6,14 @@
 package services;
 
 import java.util.List;
+import javax.ejb.Local;
 import pojos.Usuario;
 
 /**
  *
  * @author Sebastian
  */
-@javax.ejb.Local
+@Local
 public interface UsuarioFacadeLocal {
 
     void create(Usuario usuario);

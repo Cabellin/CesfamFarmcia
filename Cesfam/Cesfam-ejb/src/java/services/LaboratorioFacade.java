@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Laboratorio;
@@ -13,7 +14,7 @@ import pojos.Laboratorio;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class LaboratorioFacade extends AbstractFacade<Laboratorio> implements LaboratorioFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

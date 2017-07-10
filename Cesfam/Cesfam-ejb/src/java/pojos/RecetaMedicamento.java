@@ -7,6 +7,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -16,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,35 +41,50 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RecetaMedicamento.findByExtension", query = "SELECT r FROM RecetaMedicamento r WHERE r.extension = :extension"),
     @NamedQuery(name = "RecetaMedicamento.findByUnidadE", query = "SELECT r FROM RecetaMedicamento r WHERE r.unidadE = :unidadE"),
     @NamedQuery(name = "RecetaMedicamento.findByCantTotal", query = "SELECT r FROM RecetaMedicamento r WHERE r.cantTotal = :cantTotal"),
-    @NamedQuery(name = "RecetaMedicamento.findByEstado", query = "SELECT r FROM RecetaMedicamento r WHERE r.estado = :estado")})
+    @NamedQuery(name = "RecetaMedicamento.findByEstado", query = "SELECT r FROM RecetaMedicamento r WHERE r.estado = :estado"),
+    @NamedQuery(name = "RecetaMedicamento.findByUltimaEntrega", query = "SELECT r FROM RecetaMedicamento r WHERE r.ultimaEntrega = :ultimaEntrega")})
 public class RecetaMedicamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RecetaMedicamentoPK recetaMedicamentoPK;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "UNIDAD_C")
     private String unidadC;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "PERIODICIDAD")
     private BigInteger periodicidad;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "UNIDAD_P")
     private String unidadP;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "EXTENSION")
     private BigInteger extension;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "UNIDAD_E")
     private String unidadE;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "CANT_TOTAL")
     private BigInteger cantTotal;
+    @Size(max = 20)
     @Column(name = "ESTADO")
     private String estado;
+    @Column(name = "ULTIMA_ENTREGA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ultimaEntrega;
     @JoinColumn(name = "MEDICAMENTO_CODIGO", referencedColumnName = "CODIGO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Medicamento medicamento;
@@ -164,6 +184,14 @@ public class RecetaMedicamento implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Date getUltimaEntrega() {
+        return ultimaEntrega;
+    }
+
+    public void setUltimaEntrega(Date ultimaEntrega) {
+        this.ultimaEntrega = ultimaEntrega;
     }
 
     public Medicamento getMedicamento() {

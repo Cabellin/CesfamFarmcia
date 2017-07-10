@@ -10,6 +10,8 @@ import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -19,9 +21,12 @@ import javax.persistence.Embeddable;
 public class RecetaMedicamentoPK implements Serializable {
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "MEDICAMENTO_CODIGO")
     private String medicamentoCodigo;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "RECETA_ID")
     private BigInteger recetaId;
 

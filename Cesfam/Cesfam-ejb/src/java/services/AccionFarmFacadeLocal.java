@@ -6,13 +6,14 @@
 package services;
 
 import java.util.List;
+import javax.ejb.Local;
 import pojos.AccionFarm;
 
 /**
  *
  * @author Sebastian
  */
-@javax.ejb.Local
+@Local
 public interface AccionFarmFacadeLocal {
 
     void create(AccionFarm accionFarm);

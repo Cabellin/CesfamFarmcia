@@ -6,13 +6,14 @@
 package services;
 
 import java.util.List;
+import javax.ejb.Local;
 import pojos.ViaAdministracion;
 
 /**
  *
  * @author Sebastian
  */
-@javax.ejb.Local
+@Local
 public interface ViaAdministracionFacadeLocal {
 
     void create(ViaAdministracion viaAdministracion);

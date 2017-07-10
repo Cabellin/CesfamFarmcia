@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -38,11 +40,15 @@ public class MedicamentoCompuesto implements Serializable {
     @EmbeddedId
     protected MedicamentoCompuestoPK medicamentoCompuestoPK;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "CANTIDAD")
     private double cantidad;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "UNIDAD")
     private String unidad;
+    @Size(max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @JoinColumn(name = "COMPUESTO_ID", referencedColumnName = "ID", insertable = false, updatable = false)

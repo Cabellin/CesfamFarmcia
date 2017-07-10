@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,18 +42,26 @@ public class Funcionario implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "RUT")
     private BigDecimal rut;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "DV")
     private Character dv;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "NOMBRES")
     private String nombres;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_PAT")
     private String apellidoPat;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "APELLIDO_MAT")
     private String apellidoMat;
     @JoinColumn(name = "TIPO_FUNC_ID", referencedColumnName = "ID")

@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.TipoFunc;
@@ -13,7 +14,7 @@ import pojos.TipoFunc;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class TipoFuncFacade extends AbstractFacade<TipoFunc> implements TipoFuncFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

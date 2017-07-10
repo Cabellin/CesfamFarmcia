@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,9 +41,11 @@ public class MedicamentoPartida implements Serializable {
     @EmbeddedId
     protected MedicamentoPartidaPK medicamentoPartidaPK;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "FECHA_VENCIMIENTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaVencimiento;

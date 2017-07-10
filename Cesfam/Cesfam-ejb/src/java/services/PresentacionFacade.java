@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.Presentacion;
@@ -13,7 +14,7 @@ import pojos.Presentacion;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class PresentacionFacade extends AbstractFacade<Presentacion> implements PresentacionFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")

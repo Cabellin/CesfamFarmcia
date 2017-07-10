@@ -5,6 +5,7 @@
  */
 package services;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import pojos.NomGenerico;
@@ -13,7 +14,7 @@ import pojos.NomGenerico;
  *
  * @author Sebastian
  */
-@javax.ejb.Stateless
+@Stateless
 public class NomGenericoFacade extends AbstractFacade<NomGenerico> implements NomGenericoFacadeLocal {
 
     @PersistenceContext(unitName = "Cesfam-ejbPU")
