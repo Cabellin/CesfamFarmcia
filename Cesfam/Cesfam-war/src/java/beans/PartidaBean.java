@@ -204,9 +204,10 @@ public class PartidaBean implements Serializable {
             aumentarStock();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Partida ingresada correctamente"));
             seleccionados = new ArrayList<MedicamentoPartida>();
-            medicamentosBd = new ArrayList<Medicamento>();
+            medicamentosBd = medicamentoFacade.findAll();
+            proveedorId = null;
             partida = new Partida();
-            return "index";
+            return "partida";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error: " + e.getMessage(), ""));
             return "partida";

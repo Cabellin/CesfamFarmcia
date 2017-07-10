@@ -56,16 +56,14 @@ public class MermaBean implements Serializable {
     public List<RegistroMerma> getMermaPendientes() {
         List<RegistroMerma> mermas = mermaFacade.findAll();
         List<RegistroMerma> pendientes = new ArrayList<RegistroMerma>();
-        for (RegistroMerma temp : mermas)
-        {
-            if(temp.getEstado().equals("Pendiente"))
-            {
+        for (RegistroMerma temp : mermas) {
+            if (temp.getEstado().equals("Pendiente")) {
                 pendientes.add(temp);
             }
         }
         return pendientes;
     }
-    
+
     public String getMedicamento() {
         return medicamento;
     }
@@ -82,8 +80,8 @@ public class MermaBean implements Serializable {
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
     }
-    
-    public List<RegistroMerma> getMermas(){
+
+    public List<RegistroMerma> getMermas() {
         return mermaFacade.findAll();
     }
 
@@ -103,7 +101,7 @@ public class MermaBean implements Serializable {
         if (com == -1 || com == 0) {
             m.setStockDisponible(m.getStockDisponible().subtract(merma.getCantidad()));
             medicamentoFacade.edit(m);
-        }else{
+        } else {
             throw new Exception("No puede descontar número mayor al Stock Fisico actual");
         }
     }
@@ -131,4 +129,16 @@ public class MermaBean implements Serializable {
         }
     }
 
+    public String descontarStockFisico(RegistroMerma merma) {
+        RegistroMerma m = mermaFacade.find(merma.getIdReg());
+        m.setEstado("Aprobado");
+        mermaFacade.edit(m);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Stock físico descontado!!!"));
+        return "descontarStockFisico";
+    }
+
+    public String volver(){
+        return "RegistrarMerma?faces-redirect=true";
+    }
+    
 }

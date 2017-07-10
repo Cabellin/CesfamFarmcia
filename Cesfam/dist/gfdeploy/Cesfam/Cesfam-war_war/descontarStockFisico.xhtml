@@ -9,63 +9,48 @@
         <f:event type="preRenderView" listener="#{usuarioBean.verificarSesion()}"/>
         <link rel="icon" type="image/png" href="../resources/images/favicon.png" />
     </h:head>
-    <h:body>
+    <h:body style="background-image: url('../resources/images/farmacia1.jpg')">
         <h:form id="form">
             <center>
-                <br/><br/>
+                <br/><br/><br/><br/><br/>
                 <p:messages id="mensaje" autoUpdate="false"/>
 
-                <p:dataTable id="vendedores" var="m" value="#{mermaBean.mermas}" style="margin-bottom:20px;height:300px; width: 1300px;" emptyMessage="No se han encontrado mermas en la base de datos">
+                <p:dataTable id="mermasPendientes" var="m" value="#{mermaBean.mermaPendientes}" style="margin-bottom:20px;height:400px; width: 1300px;" emptyMessage="No se han encontrado mermas pendientes en la base de datos" paginator="true" rows="10">
                     <f:facet name="header">
-                        Descontar Stock Físico
+                        Registro de Mermas Pendientes
                     </f:facet>
 
                     <p:column headerText="Cantidad">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{m.cantidad}" /></f:facet>
-                            <f:facet name="input"><h:outputText value="#{m.cantidad}" style="width:100%"/></f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{m.cantidad}" />
                     </p:column>
 
                     <p:column headerText="Descripción">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{m.descripcion}" /></f:facet>
-                            <f:facet name="input"><h:outputText value="#{m.descripcion}" style="width:100%"/></f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{m.descripcion}" />
                     </p:column>
 
                     <p:column headerText="Motivo">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{m.motivo}" /></f:facet>
-                            <f:facet name="input"><h:outputText value="#{m.motivo}" style="width:100%"/></f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{m.motivo}" />
                     </p:column>
 
+                    <p:column headerText="Medicamento">
+                        <h:outputText value="#{m.medicamentoCodigo.nomComercial}" />
+                    </p:column>
+                    
                     <p:column headerText="Fecha">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{m.fecha}" /></f:facet>
-                            <f:facet name="input">
-                                <h:outputText value="#{m.fecha}" style="width:100%">
-                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                </h:outputText>
-                            </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{m.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Hora">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{m.hora}" /></f:facet>
-                            <f:facet name="input">
-                                <h:outputText value="#{m.hora}" style="width:100%">
-                                    <f:convertDateTime pattern="HH:mm" />
-                                </h:outputText>
-                            </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{m.hora}">
+                            <f:convertDateTime pattern="HH:mm" />
+                        </h:outputText>
                     </p:column>
 
-                    <p:column style="width:32px">
-                        <p:commandButton id="descontar" icon="ui-icon-close" actionListener="#{vendedorBean.eliminarVendedor(ven)}"/>
-                        <p:tooltip for="descontar" value="Descontar"/>
+                    <p:column style="width:34px">
+                        <p:commandButton id="descontar" actionListener="#{mermaBean.descontarStockFisico(m)}" icon="ui-icon-check" update=":form:mensaje mermasPendientes"/>
+                        <p:tooltip for="descontar" value="Descontar Stock Físico" position="right"/>
                     </p:column>
 
                 </p:dataTable>

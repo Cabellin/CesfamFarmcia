@@ -14,8 +14,8 @@
         <center>
             <ui:include src="includes/menu.xhtml"/> 
             <br/><br/>
-            <h:form id="form">
-                <p:panel id="Registrar" header="REGISTRO MERMA" style="margin-top: 20px ;max-height: min-content; width: 600px;">
+            <p:panel id="Registrar" header="REGISTRO MERMA" style="margin-top: 20px ;max-height: min-content; width: 750px;">
+                <h:form id="form" style="display:inline;">
                     <p:messages id="mensaje" autoUpdate="false"/>
                     <h:panelGrid columns="2" cellpadding="7" style="margin-bottom:10px" columnClasses="label, value">
                         <h:outputText value="Cantidad" />
@@ -35,24 +35,24 @@
                             <f:selectItems value="#{mermaBean.medicamentos}" var="m" itemLabel="#{m.nomComercial} - #{m.nomGenericoId.descripcion}" itemValue="#{m.codigo}" />
                         </p:selectOneListbox>
 
-                        <h:outputText/><h:outputText/><h:outputText/><h:outputText/>
-                        
-                        <p:commandButton value="Registrar" update="mensaje" action="#{mermaBean.registrarMerma()}" ajax="false"/>
-
-                        <p:commandButton value="Reducir stock físico" actionListener="#{dialogView.destroyWorld}" update="mensaje">
-                            <p:confirm header="Confirmación" message="¿Se ha hecho una auditoría al respecto?" icon="ui-icon-alert" />
-                        </p:commandButton>
-
-                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                        </p:confirmDialog>
-                        
-                        <h:outputText/><h:outputText/>
                     </h:panelGrid>
-                </p:panel>
+                    
+                    <br/><br/>
+                    <p:commandButton value="Registrar Merma" update="mensaje" action="RegistrarMerma?faces-redirect=true" ajax="false"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            </h:form>
+
+                </h:form>
+
+
+                
+                <h:form style="display:inline;">         
+                    <p:commandButton value="Mermas Pendientes" action="logueoDescontar?faces-redirect=true"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p:commandButton value="Informe de Mermas"/>
+                </h:form> 
+                <br/><br/><br/>
+
+            </p:panel>
+
         </center>
 
         <script type="text/javascript">
